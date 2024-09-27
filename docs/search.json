@@ -5,5 +5,33 @@
     "title": "About",
     "section": "",
     "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Stephen Carroll",
+    "section": "",
+    "text": "Stephen Carroll holds a Master in Environmental Data Science degree from the Bren School of Environmental Management at UC Santa Barbara. Stephen became passionate about environmental studies as an undergraduate at UC Santa Cruz, where he interned with the UC Natural Reserve System, working to restore coastal prairie habitat. After graduating with an Anthropology degree in 2014, Stephen worked in agriculture, first, at an agri-tech startup with a mission to transform local food systems through vertical hydroponic farms, and later, at an organic farm, where he served in a leadership position and developed efficient approaches to workflow and logistics with the goal of reducing waste and costly inputs. Stephen also earned a certificate in microscopy and soil science, developing expertise in the microbiological processes that underpin the distinct agricultural operations in which he has taken part. He is excited to use his skills in data analysis, statistics, and programming to deepen his knowledge of conservation, waste management, and agroecology. After graduate school, he intends to use data science to find practical solutions to universal problems."
+  },
+  {
+    "objectID": "index.html#education",
+    "href": "index.html#education",
+    "title": "Stephen Carroll",
+    "section": "Education",
+    "text": "Education\nsome text here"
+  },
+  {
+    "objectID": "index.html#experience",
+    "href": "index.html#experience",
+    "title": "Stephen Carroll",
+    "section": "Experience",
+    "text": "Experience\nsome text here"
+  },
+  {
+    "objectID": "index.html#skills",
+    "href": "index.html#skills",
+    "title": "Stephen Carroll",
+    "section": "Skills",
+    "text": "Skills\nsome text here"
   }
 ]

@@ -1,5 +1,34 @@
 ---
-title: "stephenccodes.github.io"
+title: "Stephen Carroll"
+image: Stephen_Carroll_MEDS_Headshot_2024_0021.jpeg
+about:
+  template: trestles
+  image-shape: rounded
+  image-width: 17em
+  links: 
+    - text: LinkedIn
+      href: "https://www.linkedin.com/in/stephen-carroll-754b5191/"
+      target: _blank
+    - text: GitHub
+      href: "https://github.com/stephenccodes"
+      target: _blank
+    - text: Email
+      href: mailto:scarroll@bren.ucsb.edu
+      target: _blank
 ---
 
 
+Stephen Carroll holds a Master in Environmental Data Science degree from the Bren School of Environmental Management at UC Santa Barbara. 
+Stephen became passionate about environmental studies as an undergraduate at UC Santa Cruz, where he interned with the UC Natural Reserve System, working to restore coastal prairie habitat. After graduating with an Anthropology degree in 2014, Stephen worked in agriculture, first, at an agri-tech startup with a mission to transform local food systems through vertical hydroponic farms, and later, at an organic farm, where he served in a leadership position and developed efficient approaches to workflow and logistics with the goal of reducing waste and costly inputs. Stephen also earned a certificate in microscopy and soil science, developing expertise in the microbiological processes that underpin the distinct agricultural operations in which he has taken part. He is excited to use his skills in data analysis, statistics, and programming to deepen his knowledge of conservation, waste management, and agroecology. After graduate school, he intends to use data science to find practical solutions to universal problems.
+
+## Education
+
+some text here
+
+## Experience
+
+some text here
+
+## Skills
+
+some text here
