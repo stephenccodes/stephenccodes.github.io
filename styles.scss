@@ -1,0 +1,51 @@
+/*-- scss:defaults --*/
+
+// Import Google Fonts 
+@import url('https://fonts.googleapis.com/css2?family=Belleza&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+// Creat font Variables
+$Belleza: "Belleza", sans-serif;
+
+// Colors
+$Tea-Green: #E4F1E4;
+$Cambridge-Blue: #87BBA2;
+$Blue-Munsell: #55828B;
+$Dark-Slate-Gray: #3B6064;
+$Charcoal: #364958;
+$Mint-White: #F2F7F2;
+
+// Quarto Sass Variables
+$body-bg: $Blue-Munsell;
+$navbar-bg: $Cambridge-Blue;
+$navbar-fg: $Tea-Green;
+$navbar-hl: $Mint-White;
+
+
+/*-- scss:rules --*/
+
+
+h1, h2, h3, h4, h5, h6{
+    font-family: $Belleza;
+}
+
+h1, h2 {
+  letter-spacing: 5px;
+  font-weight: 700;
+}
+
+.title{
+  color: maroon;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.gray-text {
+  color: $Charcoal;
+}
+
+.navbar-brand img {
+  max-height: 40px;
+  width: auto;
+}

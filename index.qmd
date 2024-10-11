@@ -7,9 +7,11 @@ about:
   image-width: 17em
   links: 
     - text: LinkedIn
+      icon: linkedin
       href: "https://www.linkedin.com/in/stephen-carroll-754b5191/"
       target: _blank
     - text: GitHub
+      icon: github
       href: "https://github.com/stephenccodes"
       target: _blank
     - text: Email
