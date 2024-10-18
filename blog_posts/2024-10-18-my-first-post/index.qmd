@@ -1,0 +1,33 @@
+---
+title: "Blog post 1"
+description: "A short catchy description of the blog post"
+author: 
+    - name: Stephen Carroll
+      url: http://stephenccodes.github.io/
+      affiliation: MEDS
+      affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds-program
+date: 2024-10-18
+categories: [Quarto, MEDS]
+toc: true
+bibliography: references.bib
+#csl: #example cslstyle.csl from zotero
+#image: img_file.png (from this blog_posts file folder)
+citation: 
+  url: https://stephenccodes.github.io/blog/2024-10-18-my-first-post/
+---
+
+## This is my first section
+
+I'm going to insert a footnote here[^1]
+
+[^1]: Here is a new footnote
+
+## This is my second
+
+Here's my next paragraph[^2]
+
+[^2]: Here is my second footnote
+
+I'm citing me[@csik2022]
+
+Here is more random text. I'm going to cite a journal article now.[@gaynor2022]

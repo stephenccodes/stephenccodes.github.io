@@ -14,7 +14,9 @@ website:
       - about.qmd
       - href: resources.qmd
         text: Resources
-        #text: CV
+      - href: blog_posts.qmd
+        text: Blog
+     #-text: CV
         #href: filepath_here
   page-footer: 
     background: light
