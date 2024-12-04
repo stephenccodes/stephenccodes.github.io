@@ -20,6 +20,7 @@
         "#image: img_file.png (from this blog_posts file folder)\n",
         "citation: \n",
         "  url: https://stephenccodes.github.io/blog/2024-10-18-my-first-post/\n",
+        "#jupyter: eds220-env\n",
         "---\n",
         "\n",
         "\n",
@@ -77,7 +78,7 @@
         "\n",
         "### Construct a file path to the Landsat data and read it in:\n"
       ],
-      "id": "ccd29d2e"
+      "id": "2c7d51c7"
     },
     {
       "cell_type": "code",
@@ -97,7 +98,7 @@
         "# Import the landsat data\n",
         "landsat = rioxr.open_rasterio(fp)"
       ],
-      "id": "1a7978d5",
+      "id": "de5975cf",
       "execution_count": null,
       "outputs": []
     },
@@ -107,7 +108,7 @@
       "source": [
         "###  Data Exploration\n"
       ],
-      "id": "0ac78c2e"
+      "id": "60f2141e"
     },
     {
       "cell_type": "code",
@@ -118,7 +119,7 @@
         "# View the data\n",
         "landsat"
       ],
-      "id": "de43fcfb",
+      "id": "acf4feb5",
       "execution_count": null,
       "outputs": []
     },
@@ -129,7 +130,7 @@
         "# Find the CRS of the landsat data\n",
         "print('CRS', landsat.rio.crs)"
       ],
-      "id": "fcdce04d",
+      "id": "6bb1d99e",
       "execution_count": null,
       "outputs": []
     },
@@ -143,7 +144,7 @@
         "print('Height: ', landsat.rio.height)\n",
         "print('Width: ', landsat.rio.width)"
       ],
-      "id": "0ed406ed",
+      "id": "cf685633",
       "execution_count": null,
       "outputs": []
     },
@@ -156,7 +157,7 @@
         "# Find the data type of the landsat data\n",
         "print('Data type: \\n', landsat.dtypes)"
       ],
-      "id": "f4d1a3a7",
+      "id": "0b52ccd2",
       "execution_count": null,
       "outputs": []
     },
@@ -169,7 +170,7 @@
         "# Find the geographic extent of the landsat data\n",
         "print(landsat.rio.bounds(), '\\n')"
       ],
-      "id": "9d88f014",
+      "id": "344821d4",
       "execution_count": null,
       "outputs": []
     },
@@ -183,7 +184,7 @@
         "\n",
         "### Drop the `band` dimension of the data:\n"
       ],
-      "id": "4b288fb8"
+      "id": "fe73f0cb"
     },
     {
       "cell_type": "code",
@@ -192,7 +193,7 @@
         "# Remove the first dimension(band) and drop the associated coordinates\n",
         "landsat = landsat.squeeze().drop_vars('band')"
       ],
-      "id": "f1ba79db",
+      "id": "56830edc",
       "execution_count": null,
       "outputs": []
     },
@@ -202,7 +203,7 @@
       "source": [
         "### Select the red, green, and blue variables and convert it to an array and plot it:\n"
       ],
-      "id": "41a74e86"
+      "id": "963c0de8"
     },
     {
       "cell_type": "code",
@@ -212,7 +213,7 @@
       "source": [
         "landsat[['red', 'green', 'blue']].to_array().plot.imshow()"
       ],
-      "id": "55911f86",
+      "id": "b77a3304",
       "execution_count": null,
       "outputs": []
     },
@@ -222,7 +223,7 @@
       "source": [
         "### Adjust the scale used for plotting the bands to get a true color image and plot it again:\n"
       ],
-      "id": "05dd3e97"
+      "id": "092e947a"
     },
     {
       "cell_type": "code",
@@ -233,7 +234,7 @@
         "# Remove the exterem values caused by cloud cover and plot it again\n",
         "landsat[['red', 'green', 'blue']].to_array().plot.imshow(robust = True)"
       ],
-      "id": "a27e2c31",
+      "id": "d4413327",
       "execution_count": null,
       "outputs": []
     },
@@ -249,7 +250,7 @@
         "\n",
         "### Plot the short-wave infrared(swir22), near-infrared(nir08, and red variables:\n"
       ],
-      "id": "554c1ed2"
+      "id": "5b056775"
     },
     {
       "cell_type": "code",
@@ -260,7 +261,7 @@
         "# Use SWIR, NIR, and Red wavelengths to viaulize the vegetation and burn areas better\n",
         "landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(robust = True)"
       ],
-      "id": "fe91b9a3",
+      "id": "0cd8bb4c",
       "execution_count": null,
       "outputs": []
     },
@@ -273,7 +274,7 @@
         "\n",
         "### Import Thomas Fire perimeter and convert the CRS to match Landsat data:\n"
       ],
-      "id": "3695a57e"
+      "id": "6cfc5833"
     },
     {
       "cell_type": "code",
@@ -287,7 +288,7 @@
         "# Confirm the change was successful\n",
         "assert landsat.rio.crs == thomas_fire.crs"
       ],
-      "id": "4e14d159",
+      "id": "d2dfb339",
       "execution_count": null,
       "outputs": []
     },
@@ -297,7 +298,7 @@
       "source": [
         "### Combine both elements to create a composite map:\n"
       ],
-      "id": "bfd0a755"
+      "id": "b67278aa"
     },
     {
       "cell_type": "code",
@@ -356,7 +357,7 @@
         "\n",
         "plt.show()"
       ],
-      "id": "394a5b79",
+      "id": "631889d2",
       "execution_count": null,
       "outputs": []
     },
@@ -370,7 +371,7 @@
         "\n",
         "The burn scar is displayed as red, because newly burned land reflects strongly in SWIR bands. The areas of the map that have vegetation are depicted by green colors, as vegetation reflect near-infrared light strongly, with healthy plants reflecting more than stressed plants. Accordingly, since the chlorophyll in plants absorbs red light, very little of the repesentative blue is displayed here.\n"
       ],
-      "id": "0e62e6af"
+      "id": "e4ca1c64"
     }
   ],
   "metadata": {
