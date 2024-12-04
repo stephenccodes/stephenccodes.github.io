@@ -4,20 +4,31 @@ project:
   
 website:
   title: "Stephen Carroll"
+  favicon: MEDS/EDS-296/stephenccodes.github.io/favicon.png 
   navbar:
+    logo: MEDS/EDS-296/stephenccodes.github.io/favicon.png 
+    #logo-alt: "My alt text here"
     left:
       - href: index.qmd
         text: Home
       - about.qmd
       - href: resources.qmd
         text: Resources
-
+      - href: blog_posts.qmd
+        text: Blog
+     #-text: CV
+        #href: filepath_here
+  page-footer: 
+    background: light
+    center: Copyright 2024, Stephen Carroll
+    right: This website is built with {{< fa brands square-github title="square github icon" >}}
 format:
   html:
-    theme:
-      light: minty
-      dark: solar
-    css: styles.css
+    theme: styles.scss
+    mainfont: Montserrat
+      #light: minty
+      #dark: solar
+    #css: styles.css
     toc: false
     page-layout: full
 

@@ -1,0 +1,385 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"thomas-fire-analysis-blog\"\n",
+        "description: \"A short catchy description of the blog post\"\n",
+        "author: \n",
+        "    - name: Stephen Carroll\n",
+        "      url: http://stephenccodes.github.io/\n",
+        "      affiliation: MEDS\n",
+        "      affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds-program\n",
+        "date: 2024-10-18\n",
+        "categories: [Quarto, MEDS]\n",
+        "toc: true\n",
+        "bibliography: references.bib\n",
+        "#csl: #example cslstyle.csl from zotero\n",
+        "#image: img_file.png (from this blog_posts file folder)\n",
+        "citation: \n",
+        "  url: https://stephenccodes.github.io/blog/2024-10-18-my-first-post/\n",
+        "---\n",
+        "\n",
+        "\n",
+        "\n",
+        "# A False Color Map of the 2017 Thomas Fire\n",
+        "\n",
+        "Author: Stephen Carroll\n",
+        "\n",
+        "This project repository can be found at: [https://github.com/stephenccodes/eds220-hwk4](https://github.com/stephenccodes/eds220-hwk4)\n",
+        "\n",
+        "## <ins>About</ins>\n",
+        "### Purpose:\n",
+        "\n",
+        "The intent of this notebook is to use remote sensing and fire perimeter data to create a false-color map of the 2017 Thomas Fire and the surrounding area. The map will indicate the extent of the fire scar, and highlight areas that contain vegetation or bare soil with colors that have more contrast than a true color image. This will be achieved through various data analysis techniques and iterations of plots, outlined below.\n",
+        "\n",
+        "### Highlights:\n",
+        "\n",
+        "- Import, clean, and manipulate an xarray dataset\n",
+        "- Create a set of plots of the area in true and false-color without creating new variables\n",
+        "- Remove outlier values by adjusting the scale with the `robust` parameter.\n",
+        "- Import existing geo-data frame and implement it\n",
+        "- Create a polished map of the false-color image, with superimposed fire perimeter\n",
+        "\n",
+        "### Data Description:\n",
+        "####  <ins>Landsat Collection 2 Level-2</ins>\n",
+        "\n",
+        " This data is a simplified collection of bands (red, green, blue, near-infrared, and shortwave infrared) from the Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data, collected by the Landsat 8 satellite.\n",
+        "The data was retrieved from the Microsof Planetary Computer data catalogue and pre-processed to remove data outside land and coarsen the spatial resolution.\n",
+        "\n",
+        "Date accessed: 11/19/24\n",
+        "\n",
+        "Original data source:\n",
+        "\n",
+        "[https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2](https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2)\n",
+        "\n",
+        "#### <ins>California Fire Perimeters</ins>\n",
+        "\n",
+        "This database contains information about spatial distribution of historic wild and prescribed fires in the state of California. The data comes with a warning that it is not comprehensive, with some records lost or damaged, fire perimeters may be missing. There may also be duplicate fires and over-generalization of fire perimeters. The database is maintained by the California Department of Forestry and Fire Protection’s Fire and Resource Assessment Program.\n",
+        "\n",
+        "Date accessed: 11/19/24\n",
+        "\n",
+        "Original data source:\n",
+        "\n",
+        "https://catalog.data.gov/dataset/california-fire-perimeters-all-b3436\n",
+        "\n",
+        "### **Reference List:**\n",
+        "\n",
+        "1. U.S. Geological Survey. (n.d.). *Landsat 8-9 OLI/TIRS collection 2 level-2 science products | USGS EROS Archive*. U.S. Geological Survey. https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2 Access date: November 19, 2024.\n",
+        "\n",
+        "2. Data.gov. (2024). *California fire perimeters (ALL)*. Data.gov. https://catalog.data.gov/dataset/california-fire-perimeters-all-b3436 Access date: November 19, 2024.\n",
+        "\n",
+        "All materials were created by [Carmen Galaz-Garcia](https://github.com/carmengg) for [EDS-220: Working with Environmental Data](https://meds-eds-220.github.io/MEDS-eds-220-course/).\n",
+        "\n",
+        "## **True Color Image**\n",
+        "\n",
+        "### Construct a file path to the Landsat data and read it in:\n"
+      ],
+      "id": "ccd29d2e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Import libraries\n",
+        "import os\n",
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import geopandas as gpd\n",
+        "import rioxarray as rioxr\n",
+        "import matplotlib.pyplot as plt\n",
+        "\n",
+        "# Establish a file path for the landsat data\n",
+        "fp = os.path.join('data/landsat8-2018-01-26-sb-simplified.nc')\n",
+        "\n",
+        "# Import the landsat data\n",
+        "landsat = rioxr.open_rasterio(fp)"
+      ],
+      "id": "1a7978d5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "###  Data Exploration\n"
+      ],
+      "id": "0ac78c2e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# View the data\n",
+        "landsat"
+      ],
+      "id": "de43fcfb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Find the CRS of the landsat data\n",
+        "print('CRS', landsat.rio.crs)"
+      ],
+      "id": "fcdce04d",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Find the dimensions of the landsat data\n",
+        "print('Height: ', landsat.rio.height)\n",
+        "print('Width: ', landsat.rio.width)"
+      ],
+      "id": "0ed406ed",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Find the data type of the landsat data\n",
+        "print('Data type: \\n', landsat.dtypes)"
+      ],
+      "id": "f4d1a3a7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Find the geographic extent of the landsat data\n",
+        "print(landsat.rio.bounds(), '\\n')"
+      ],
+      "id": "9d88f014",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Data Exploration Summary:\n",
+        "\n",
+        "To begin, I viewed the landsat data to learn more about it. It has the variables 'Red', 'Green', 'Blue', 'nir08', and 'swir12'. These variables represent energy bands, and the last two variables have unique names but are assumed to represent near-infrared and short wave infrared bands. I found the coordinate reference system(CRS) used and printed the height(731) and width(870) of the dataset. I listed the data types for each variable, as well as the geographic boundary of the data.\n",
+        "\n",
+        "### Drop the `band` dimension of the data:\n"
+      ],
+      "id": "4b288fb8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "# Remove the first dimension(band) and drop the associated coordinates\n",
+        "landsat = landsat.squeeze().drop_vars('band')"
+      ],
+      "id": "f1ba79db",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Select the red, green, and blue variables and convert it to an array and plot it:\n"
+      ],
+      "id": "41a74e86"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "landsat[['red', 'green', 'blue']].to_array().plot.imshow()"
+      ],
+      "id": "55911f86",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Adjust the scale used for plotting the bands to get a true color image and plot it again:\n"
+      ],
+      "id": "05dd3e97"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Remove the exterem values caused by cloud cover and plot it again\n",
+        "landsat[['red', 'green', 'blue']].to_array().plot.imshow(robust = True)"
+      ],
+      "id": "a27e2c31",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Comparison of the ouputs for these first two maps:\n",
+        "\n",
+        "The first plot displays all of the values present, including extreme values caused by clouds or other interference. These extreme values affect the color scale, with most values rendering as either black or white. The second plot is adjusted to avoid the influence of these extreme values. When you set `robust = True`, the only values displayed are from the 2nd to 98th percentiles, allowing the color scale to better represent the meaningful range of values.  \n",
+        "\n",
+        "## **False color image**\n",
+        "\n",
+        "### Plot the short-wave infrared(swir22), near-infrared(nir08, and red variables:\n"
+      ],
+      "id": "554c1ed2"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Use SWIR, NIR, and Red wavelengths to viaulize the vegetation and burn areas better\n",
+        "landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(robust = True)"
+      ],
+      "id": "fe91b9a3",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## **False Color Composite Map**\n",
+        "\n",
+        "\n",
+        "### Import Thomas Fire perimeter and convert the CRS to match Landsat data:\n"
+      ],
+      "id": "3695a57e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Read in the Thomas fire data and convert CRS to match the landsat data\n",
+        "thomas_fire = gpd.read_file('data/thomas_fire/thomas_fire.shp').to_crs(landsat.rio.crs)\n",
+        "\n",
+        "# Confirm the change was successful\n",
+        "assert landsat.rio.crs == thomas_fire.crs"
+      ],
+      "id": "4e14d159",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Combine both elements to create a composite map:\n"
+      ],
+      "id": "bfd0a755"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "tags": []
+      },
+      "source": [
+        "# Define the landsat aspect ratio\n",
+        "landsat_aspect_ratio = landsat.rio.width / landsat.rio.height \n",
+        "\n",
+        "# Initialize the figure and set the dimensions\n",
+        "fig, ax = plt.subplots(figsize = (9, 5 * landsat_aspect_ratio)) # Apply the aspect ratio\n",
+        "\n",
+        "# Set the background color of the entire figure \n",
+        "fig.patch.set_facecolor('beige')\n",
+        "\n",
+        "# Remove axes for cleaner map\n",
+        "ax.axis('off') \n",
+        "\n",
+        "# Plot the false color remorte sensing data\n",
+        "landsat[['swir22', 'nir08', 'red']].to_array().plot.imshow(robust = True, ax = ax)\n",
+        "\n",
+        "# Plot the Thomas Fire perimeter\n",
+        "thomas_fire.boundary.plot(ax = ax, \n",
+        "                          color = \"red\", # Color it red for emphasis\n",
+        "                          linewidth = 0.8)\n",
+        "\n",
+        "# Add a main title\n",
+        "ax.set_title(\"The 2017 Thomas Fire Scar\\n\", fontsize = 12)\n",
+        "\n",
+        "# Add subtitle describing the false colors\n",
+        "fig.suptitle(\"False Colors with Short Wave Infrared, Near-Infrared, & Red Wavelengths\", \n",
+        "             color = 'black', \n",
+        "             fontsize = 10, \n",
+        "             fontweight='light', \n",
+        "             y=0.91)\n",
+        "\n",
+        "# Add a legend for the fire boundary\n",
+        "ax.legend(labels = ['Thomas Fire (2017) Scar'])\n",
+        "\n",
+        "# Add a footnote citation at the bottom of the figure\n",
+        "fig.text(0.379, 0.1, # Position\n",
+        "         'Data Source: CAL FIRE & USGS EROS Archive',\n",
+        "         ha='center', # Horizontal alignment\n",
+        "         va='center', # Vertical alignment\n",
+        "         fontsize=8, \n",
+        "         color='black', \n",
+        "         fontstyle='italic')\n",
+        "fig.text(0.395, 0.08, # Position \n",
+        "         'Date Accessed: 11/19/24',\n",
+        "         ha='right', # Horizontal alignment\n",
+        "         va='center', # Vertical alignment\n",
+        "         fontsize=8, \n",
+        "         color='black', \n",
+        "         fontstyle='italic')\n",
+        "\n",
+        "plt.show()"
+      ],
+      "id": "394a5b79",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Map Description:\n",
+        "\n",
+        "The figure above displays the area burned during the 2017 Thomas Fire, as well as surrounding areas. The area outlined in red represents the extent of the fire perimeter. This is a false color image, with Short Wave Infrared(SWIR), Near-Infrared(NIR), and Red energy bands being visualized with Red, Green, and Blue colors, respectively.\n",
+        "\n",
+        "The burn scar is displayed as red, because newly burned land reflects strongly in SWIR bands. The areas of the map that have vegetation are depicted by green colors, as vegetation reflect near-infrared light strongly, with healthy plants reflecting more than stressed plants. Accordingly, since the chlorophyll in plants absorbs red light, very little of the repesentative blue is displayed here.\n"
+      ],
+      "id": "0e62e6af"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

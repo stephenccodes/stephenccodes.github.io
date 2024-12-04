@@ -1,10 +1,31 @@
 [
   {
+    "objectID": "DELETE-LATER/practice.html",
+    "href": "DELETE-LATER/practice.html",
+    "title": "Here is my level one header",
+    "section": "",
+    "text": "Here is my level one header\nHere is my first paragraph\nHere is my second paragraph, where you can read more about MEDS.\nThis is very important text!"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
-    "text": "About this site\n\n1 + 1\n\n[1] 2"
+    "text": "some text goes here"
+  },
+  {
+    "objectID": "about.html#what-i-do-for-work",
+    "href": "about.html#what-i-do-for-work",
+    "title": "About",
+    "section": "",
+    "text": "some text goes here"
+  },
+  {
+    "objectID": "about.html#what-i-do-for-fun",
+    "href": "about.html#what-i-do-for-fun",
+    "title": "About",
+    "section": "What I do for fun",
+    "text": "What I do for fun\n\nsome text goes here\n\nhere is some more text\n\ncenter text here"
   },
   {
     "objectID": "index.html",
@@ -33,5 +54,40 @@
     "title": "Stephen Carroll",
     "section": "Skills",
     "text": "Skills\nsome text here"
+  },
+  {
+    "objectID": "blog_posts.html",
+    "href": "blog_posts.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Blog post 1\n\n\n\nQuarto\n\n\nMEDS\n\n\n\nA short catchy description of the blog post\n\n\n\nStephen Carroll\n\n\nOct 18, 2024\n\n\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "blog_posts/2024-10-18-my-first-post/index.html#this-is-my-second",
+    "href": "blog_posts/2024-10-18-my-first-post/index.html#this-is-my-second",
+    "title": "Blog post 1",
+    "section": "This is my second",
+    "text": "This is my second\nHere’s my next paragraph2\nI’m citing me(Csik 2022)\nHere is more random text. I’m going to cite a journal article now.(Gaynor et al. 2022)"
+  },
+  {
+    "objectID": "blog_posts/2024-10-18-my-first-post/index.html",
+    "href": "blog_posts/2024-10-18-my-first-post/index.html",
+    "title": "Blog post 1",
+    "section": "",
+    "text": "I’m going to insert a footnote here1"
+  },
+  {
+    "objectID": "blog_posts/2024-10-18-my-first-post/index.html#this-is-my-first-section",
+    "href": "blog_posts/2024-10-18-my-first-post/index.html#this-is-my-first-section",
+    "title": "Blog post 1",
+    "section": "",
+    "text": "I’m going to insert a footnote here1"
+  },
+  {
+    "objectID": "blog_posts/2024-10-18-my-first-post/index.html#footnotes",
+    "href": "blog_posts/2024-10-18-my-first-post/index.html#footnotes",
+    "title": "Blog post 1",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nHere is a new footnote↩︎\nHere is my second footnote↩︎"
   }
 ]
