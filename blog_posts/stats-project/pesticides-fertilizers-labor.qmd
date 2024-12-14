@@ -1,5 +1,5 @@
 ---
-title: "Examing the impact on Fertilizer & Pesticide Use on Agricultural Labor Needs"
+title: "Examing the Impact on Fertilizer & Pesticide Use on Agricultural Labor Needs"
 description: "A deep dive into how the rapid rise in artificial inputs in the 20th century affected labor needs on farms."
 author: 
     - name: Stephen Carroll
@@ -9,7 +9,6 @@ author:
 date: 2024-10-18
 categories: [Quarto, MEDS]
 toc: true
-bibliography: references.bib
 #csl: #example cslstyle.csl from zotero
 #image: img_file.png (from this blog_posts file folder)
 citation: 
@@ -99,7 +98,7 @@ library(readxl)
 
 ```{r}
 # Read in pesticide data
-pesticide <- read_excel(here("data/pesticide_consumption_state.xls"), skip = 5, range = "A6:AW53")
+pesticide <- read_excel(here("blog_posts/stats-project/data/pesticide_consumption_state.xls"), skip = 5, range = "A6:AW53")
 
 pesticide_clean <- pesticide[rowSums(is.na(pesticide)) < ncol(pesticide), ]
 
@@ -116,7 +115,7 @@ pesticide_tidy <- pesticide_clean %>%
 
 ```{r}
 # Read in fertilizer data
-fertilizer <- read_excel(here("data/fertilizer_consumption_state.xls"), skip = 5, range = "A6:AW53")
+fertilizer <- read_excel(here("blog_posts/stats-project/data/fertilizer_consumption_state.xls"), skip = 5, range = "A6:AW53")
 
 fertilizer_clean <- fertilizer[rowSums(is.na(fertilizer)) < ncol(fertilizer), ]
 
@@ -133,7 +132,7 @@ fertilizer_tidy <- fertilizer_clean %>%
 
 ```{r}
 # Read in labor data
-labor <- read_csv(here("data/labor_etc.csv"))
+labor <- read_csv(here("blog_posts/stats-project/data/labor_etc.csv"))
 
 # Filter rows in the 'labor' data frame where any column contains the word "labor"
 filtered_labor <- labor[apply(labor, 1, function(row) any(grepl("labor", row, ignore.case = TRUE))), ]
