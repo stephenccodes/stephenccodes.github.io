@@ -1,0 +1,581 @@
+---
+title: "eds222-final-project"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+**Final Project**
+
+*Data*
+- Source(s)?
+- Completeness?
+- Processing?
+
+*Explore*
+- Visualize
+- Summarize
+- Hypothesize
+
+*Analysis*
+- Method?
+- Implementation?
+- Diagnostics?
+
+What is my hypothesis.
+
+Determine the P-value.
+
+Spend a lot of time on the methods, explain research question, objective, where the data is from. Add citations where applicable. Does the data satisfy the needs of the analysis?  EX: “ I need to do another test because my results aren’t robust enough” 
+
+Linear or logistic regression based on hypothesis and data.
+
+Determine/explain what the indexes are representative of.
+
+Tidy the data, make it longer and compare state by region and make it a categorical variable for a logistic regression: “How likely is it that a state is in a  given region based on the values for fert/pest use”. Or I could compare a state to the national average. 
+
+Remove yield consideration from research question: it is already assumed that pest/fert affects yields.
+
+Potential OVB: is total area represented?  because that affects yield.
+
+
+**Outline**
+
+*Intro*
+- Introduction
+- Data summary & citation
+- Determine what indices mean and what category of labor to look at
+- Research question & objective
+
+*Setup*
+- Load packages
+- Read in data
+
+
+*Data preparation*
+- Remove extraneous rows/columns
+- Pivot longer
+- Add region column?
+- Convert indices to actual values?
+
+*Data exploration & processing*
+- Visualize data
+  -Trend analysis
+      - Time-series plots
+      - Seasonal, cyclical, or long term trend?
+  - Correlation analysis
+      - Correlation matrix
+      - Scatter plots
+- Find the p-value
+- Hypo statements
+- Determine methods
+- Summary statistic(s)
+- Note missing data
+
+*Analysis*
+- Labor is for USA so focus on a country average for all
+
+- Linear regression
+  - Pesticide vs Fertilizer
+  - Labor cost vs other variables
+  - Time trend for each variable
+
+- Multi-linear regression   
+  - Use different quartiles of fertilizer and pesticide use
+
+- Interaction regression
+  - Do fertilizer use change determining on pesticide use and vice versa?
+
+- Residual analysis
+  - Model fit: R^2 and p-values relative to alpha = 0.05
+
+- Time???
+
+*Interpretation* 
+- Coefficients
+
+- Time Trends
+
+- Limitations 
+  - Discuss possible OVB or other limitations on ability to draw meaningful conclusions due ot influence on trends
+    - Total area in use
+    - Technology changes
+    - Policy changes
+    - Environmental changes
+  
+  - Include other information
+    - Macroeconomic trends
+      - Inflation
+      - Cost of living
+*Housekeeping*
+- Data citations
+- Slide deck for presentation
+- Images for blog
+- Analysis summary (1500 words)
+
+
+
+
+
+
+```{r}
+library(tidyverse)
+library(tidyr)
+library(here)
+library(readxl)
+```
+
+
+# crop_output <- read_excel(here("data/new_crop_output_state.xls"))
+
+```{r}
+# Read in pesticide data
+pesticide <- read_excel(here("data/pesticide_consumption_state.xls"), skip = 5, range = "A6:AW53")
+
+pesticide_clean <- pesticide[rowSums(is.na(pesticide)) < ncol(pesticide), ]
+
+pesticide_tidy <- pesticide_clean %>%
+  pivot_longer(cols = -Year, # Pivot all columns except Year
+               names_to = "state", # Create a new column "State" for state names
+               values_to = "pesticide") %>% # The numeric values go into a new column "Value"
+  group_by(Year) %>%
+  mutate(avg_pesticide = mean(pesticide)) %>%
+  ungroup() %>%
+  distinct(Year, .keep_all = TRUE) %>% # Remove duplicate rows by year
+  select(Year, avg_pesticide)  # Keep only 'Year' and 'us_avg_pesticide'
+```
+
+```{r}
+# Read in fertilizer data
+fertilizer <- read_excel(here("data/fertilizer_consumption_state.xls"), skip = 5, range = "A6:AW53")
+
+fertilizer_clean <- fertilizer[rowSums(is.na(fertilizer)) < ncol(fertilizer), ]
+
+fertilizer_tidy <- fertilizer_clean %>%
+  pivot_longer(cols = -Year, # Pivot all columns except Year
+               names_to = "state", # Create a new column "State" for state names
+               values_to = "fertilizer") %>%  # The numeric values go into a new column "Value"
+  group_by(Year) %>%
+  mutate(avg_fertilizer = mean(fertilizer)) %>%
+  ungroup() %>%
+  distinct(Year, .keep_all = TRUE) %>% # Remove duplicate rows by year
+  select(Year, avg_fertilizer)  # Keep only 'Year' and 'us_avg_pesticide'
+```
+
+```{r}
+# Read in labor data
+labor <- read_csv(here("data/labor_etc.csv"))
+
+# Filter rows in the 'labor' data frame where any column contains the word "labor"
+filtered_labor <- labor[apply(labor, 1, function(row) any(grepl("labor", row, ignore.case = TRUE))), ]
+
+
+```
+
+
+```{r}
+# Pivoting the data so that each attribute becomes its own column
+labor_clean <- filtered_labor %>%
+  pivot_wider(
+    names_from = Attribute, # The column to spread into multiple columns
+    values_from = Value,   # The column to use as the values for each new column
+    names_prefix = "Labor inputs: "   # Adding a prefix to the new column names
+  )
+```
+
+```{r}
+# Subset the labor data to keep only total labor index and hired labor index
+labor_tidy <- labor_clean[, c("Labor inputs: Labor inputs: Total", "Labor inputs: Labor inputs: Hired labor", "Year"), drop = FALSE] %>%
+  select("Year", "Labor inputs: Labor inputs: Total", "Labor inputs: Labor inputs: Hired labor") %>%
+   filter(Year >= 1960) %>%  # Filter for years 1960 and later
+  rename(
+    avg_total_labor = "Labor inputs: Labor inputs: Total",
+    avg_hired_labor = "Labor inputs: Labor inputs: Hired labor"
+  )
+
+
+# labor_tidy <- labor_clean %>%
+#   select(Year, 'Labor inputs: Labor inputs: Total') %>%
+#   rename(total_labor = 'Labor inputs: Labor inputs: Total')
+
+```
+
+```{r}
+ggplot(fertilizer_tidy, aes(x = Year, y = avg_fertilizer)) +
+  geom_line()
+```
+
+```{r}
+ggplot(pesticide_tidy, aes(x = Year, y = avg_pesticide)) +
+  geom_point()
+```
+
+```{r}
+ggplot(labor_tidy, aes(x = Year, y = avg_total_labor)) +
+  geom_line()
+```
+
+
+
+
+```{r}
+ggplot(pesticide_tidy, aes(x = Year, y = avg_pesticide)) +
+  geom_point()
+```
+
+
+```{r}
+# Merge the pesticide_tidy, fertilizer_tidy, and labor_tidy dataframes by the 'Year' column
+combined_tidy <- left_join(pesticide_tidy, fertilizer_tidy, by = "Year") %>%
+  left_join(labor_tidy, by = "Year")
+
+# Add a column for the time difference between each year and the previous year
+combined_tidy <- combined_tidy %>%
+  mutate(years_elapsed = Year - min(Year))
+
+
+# View the updated dataframe
+head(combined_tidy)
+```
+
+
+
+```{r}
+# Plot the trend of pesticide use over time
+ggplot(combined_tidy, aes(x = Year, y = avg_pesticide)) +
+  geom_line(color = "orange", size = 1.5, alpha = 0.7) +  # Add points with custom color, size, and transparency
+  labs(
+    title = "Average Pesticide Use Over Time",
+    subtitle = "Trend of U.S. Average Pesticide Use by Year (1960-2004)",
+    x = "Year",
+    y = "Average Pesticide Use (Index)",
+    caption = "Source:U.S. Department of Agriculture, Economic Research Service. "  # Optional caption for data source
+  ) +
+  theme_minimal() +  # Clean background
+  theme(
+    text = element_text(size = 12),  # Set base font size
+    axis.title = element_text(face = "bold"),  # Bold axis titles
+    axis.text = element_text(color = "black"),  # Color for axis labels
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # Centered title with larger font
+    plot.subtitle = element_text(hjust = 0.5, size = 12),  # Centered subtitle
+    plot.caption = element_text(hjust = 0, size = 10, face = "italic")  # Caption style
+  )
+```
+
+```{r}
+# Plot the trend of pesticide use over time
+ggplot(combined_tidy, aes(x = Year, y = avg_fertilizer)) +
+  geom_line(color = "darkgreen", size = 1.5, alpha = 0.7) +  # Add points with custom color, size, and transparency
+  labs(
+    title = "Average Fertilizer Use Over Time",
+    subtitle = " Trend of U.S. Average Fertilizer Use (1960-2004)",
+    x = "Year",
+    y = "Average Fertilizer Use (Index)",
+    caption = "Source:U.S. Department of Agriculture, Economic Research Service. "  # Optional caption for data source
+  ) +
+  theme_minimal() +  # Clean background
+  theme(
+    text = element_text(size = 12),  # Set base font size
+    axis.title = element_text(face = "bold"),  # Bold axis titles
+    axis.text = element_text(color = "black"),  # Color for axis labels
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # Centered title with larger font
+    plot.subtitle = element_text(hjust = 0.5, size = 12),  # Centered subtitle
+    plot.caption = element_text(hjust = 0, size = 10, face = "italic")  # Caption style
+  )
+```
+
+
+
+```{r}
+# Plot the trend of labor needs over time
+ggplot(combined_tidy, aes(x = Year)) +
+  geom_line(aes(y = avg_total_labor, color = "Total Labor"), size = 1.5) +  # Line for avg_total_labor
+  geom_line(aes(y = avg_hired_labor, color = "Hired Labor"), size = 1.5) +  # Line for avg_hired_labor
+  scale_color_manual(values = c("Total Labor" = "blue", "Hired Labor" = "red")) +  # Custom colors
+  labs(
+    title = "Labor Inputs: Total vs. Hired Labor Over Time",
+    subtitle = "Trend of U.S. Average Total Labor and Hired Labor Input Indices (1960-2004)",
+    x = "Year",
+    y = "Labor Inputs (Index)",
+    color = "Labor Type"  # Legend title
+  ) +
+  theme_minimal() +  # Clean theme
+  theme(
+    text = element_text(size = 12),  # Set base font size
+    axis.title = element_text(face = "bold"),  # Bold axis titles
+    axis.text = element_text(color = "black"),  # Axis labels color
+    legend.title = element_text(face = "bold"),  # Bold legend title
+    legend.position = "top",  # Position the legend at the top
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # Centered plot title with larger font size
+    plot.subtitle = element_text(hjust = 0.5, size = 12)  # Centered subtitle
+  )
+```
+
+```{r}
+print(n = 60, pesticide_tidy)
+```
+
+```{r}
+print(n = 60, labor_tidy)
+```
+
+```{r}
+print(n = 60, fertilizer_tidy)
+```
+
+```{r}
+print(n = 60, combined_tidy)
+```
+
+
+```{r}
+# Create time-series plots for each variable
+ggplot(combined_tidy, aes(x = Year, y = avg_pesticide)) +
+  geom_line() +
+  labs(title = "Trend of Average Pesticide Use (1960-2004)", x = "Year", y = "Average Pesticide") +
+  theme_minimal()
+
+ggplot(combined_tidy, aes(x = Year, y = avg_fertilizer)) +
+  geom_line() +
+  labs(title = "Trend of Average Fertilizer Use (1960-2004)", x = "Year", y = "Average Fertilizer") +
+  theme_minimal()
+
+ggplot(combined_tidy, aes(x = Year, y = avg_total_labor)) +
+  geom_line() +
+  labs(title = "Trend of Total Labor Inputs (1960-2004)", x = "Year", y = "Average Total Labor") +
+  theme_minimal()
+
+ggplot(combined_tidy, aes(x = Year, y = avg_hired_labor)) +
+  geom_line() +
+  labs(title = "Trend of Hired Labor Inputs (1960-2004)", x = "Year", y = "Average Hired Labor") +
+  theme_minimal()
+
+```
+
+
+```{r}
+library(knitr)
+library(dplyr)
+
+# Calculate the correlation matrix
+cor_matrix <- cor(combined_tidy[, c("avg_pesticide", "avg_fertilizer", "avg_total_labor", "avg_hired_labor")])
+
+# Convert the correlation matrix into a data frame for better table formatting
+cor_df <- as.data.frame(cor_matrix)
+
+# Use kable() to display the correlation matrix as a table
+kable(cor_df, digits = 2, caption = "Correlation Matrix of Agricultural Inputs (r)", format = "html")
+
+
+```
+
+```{r}
+# Scatter plots to examine relationships between pairs of variables
+
+ggplot(combined_tidy, aes(x = avg_pesticide, y = avg_fertilizer)) +
+  geom_point() +
+  labs(title = "Pesticide vs Fertilizer Use", x = "Average Pesticide", y = "Average Fertilizer") +
+  theme_minimal()
+
+ggplot(combined_tidy, aes(x = avg_total_labor, y = avg_hired_labor)) +
+  geom_point() +
+  labs(title = "Total Labor vs Hired Labor", x = "Average Total Labor", y = "Average Hired Labor") +
+  theme_minimal()
+
+ggplot(combined_tidy, aes(x = avg_pesticide, y = avg_total_labor)) +
+  geom_point() +
+  labs(title = "Pesticide Use vs Total Labor", x = "Average Pesticide", y = "Average Total Labor") +
+  theme_minimal()
+
+ggplot(combined_tidy, aes(x = avg_fertilizer, y = avg_hired_labor)) +
+  geom_point() +
+  labs(title = "Fertilizer Use vs Hired Labor", x = "Average Fertilizer", y = "Average Hired Labor") +
+  theme_minimal()
+
+```
+
+
+```{r}
+
+
+
+# Multi-linear regression: Predicting avg_total_labor using pesticide_quartile and fertilizer_quartile
+total_labor_model <- lm(avg_total_labor ~ avg_pesticide + avg_fertilizer + years_elapsed, data = combined_tidy)
+
+# View the summary of the model to interpret the coefficients
+summary(total_labor_model)
+
+```
+
+```{r}
+# A separate model predicting avg_total_labor using only avg_hired_labor
+hired_labor_model <- lm(avg_hired_labor ~ avg_pesticide + avg_fertilizer + years_elapsed, data = combined_tidy)
+
+# View the summary of this model
+summary(hired_labor_model)
+```
+
+
+```{r}
+# Extract the summaries for both models
+total_labor_summary <- summary(total_labor_model)$coefficients
+hired_labor_summary <- summary(hired_labor_model)$coefficients
+
+# Convert to data frames for easier manipulation
+total_labor_df <- as.data.frame(total_labor_summary)
+colnames(total_labor_df) <- c("Estimate", "Std. Error", "t value", "p-value")
+total_labor_df$Variable <- rownames(total_labor_df)
+total_labor_df$Model <- "Total Labor"
+
+hired_labor_df <- as.data.frame(hired_labor_summary)
+colnames(hired_labor_df) <- c("Estimate", "Std. Error", "t value", "p-value")
+hired_labor_df$Variable <- rownames(hired_labor_df)
+hired_labor_df$Model <- "Hired Labor"
+
+# Remove row names (index) by resetting the row names to NULL
+rownames(total_labor_df) <- NULL
+rownames(hired_labor_df) <- NULL
+
+# Print the tables separately
+total_labor_table <- kable(total_labor_df[, c("Variable", "Estimate", "Std. Error", "t value", "p-value")],
+                           digits = 3, 
+                           caption = "Regression Coefficients for Total Labor Model",
+                           format = "html")
+
+hired_labor_table <- kable(hired_labor_df[, c("Variable", "Estimate", "Std. Error", "t value", "p-value")],
+                            digits = 3,
+                            caption = "Regression Coefficients for Hired Labor Model",
+                            format = "html")
+
+# Print the tables
+total_labor_table
+hired_labor_table
+```
+
+```{r}
+# Load required libraries
+library(ggplot2)
+library(gridExtra)
+# Create the plot for Total Labor Model
+total_labor_plot <- ggplot(combined_tidy, aes(x = Year, y = avg_total_labor)) +
+  geom_point(color = "blue", size = 2) +  # Scatter plot for avg_total_labor
+  geom_smooth(method = "lm", formula = y ~ x, color = "red", linetype = "solid") +  # Regression line for total_labor_model
+  labs(title = "Total Labor vs Year", x = "Year", y = "Average Total Labor") +
+  theme_minimal()
+
+# Create the plot for Hired Labor Model
+hired_labor_plot <- ggplot(combined_tidy, aes(x = Year, y = avg_hired_labor)) +
+  geom_point(color = "green", size = 2) +  # Scatter plot for avg_hired_labor
+  geom_smooth(method = "lm", formula = y ~ x, color = "purple", linetype = "solid") +  # Regression line for hired_labor_model
+  labs(title = "Hired Labor vs Year", x = "Year", y = "Average Hired Labor") +
+  theme_minimal()
+
+# Display both plots side by side
+
+grid.arrange(total_labor_plot, hired_labor_plot, ncol = 2)
+
+```
+
+
+```{r}
+# 1. Scatter plot for Total Labor (avg_total_labor) vs. Pesticide use (avg_pesticide)
+ggplot(combined_tidy, aes(x = avg_pesticide, y = avg_total_labor)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", color = "blue", se = FALSE) +  # Regression line for total labor
+  labs(title = "Total Labor vs. Pesticide Use", 
+       x = "Average Pesticide Use", 
+       y = "Average Total Labor",
+       caption = "Regression line (Total Labor)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+# 2. Scatter plot for Total Labor (avg_total_labor) vs. Fertilizer use (avg_fertilizer)
+ggplot(combined_tidy, aes(x = avg_fertilizer, y = avg_total_labor)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", color = "green", se = FALSE) +  # Regression line for total labor
+  labs(title = "Total Labor vs. Fertilizer Use", 
+       x = "Average Fertilizer Use", 
+       y = "Average Total Labor",
+       caption = "Regression line (Total Labor)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+# 3. Scatter plot for Hired Labor (avg_hired_labor) vs. Pesticide use (avg_pesticide)
+ggplot(combined_tidy, aes(x = avg_pesticide, y = avg_hired_labor)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Regression line for hired labor
+  labs(title = "Hired Labor vs. Pesticide Use", 
+       x = "Average Pesticide Use", 
+       y = "Average Hired Labor",
+       caption = "Regression line (Hired Labor)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+# 4. Scatter plot for Hired Labor (avg_hired_labor) vs. Fertilizer use (avg_fertilizer)
+ggplot(combined_tidy, aes(x = avg_fertilizer, y = avg_hired_labor)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", color = "green", se = FALSE) +  # Regression line for hired labor
+  labs(title = "Hired Labor vs. Fertilizer Use", 
+       x = "Average Fertilizer Use", 
+       y = "Average Hired Labor",
+       caption = "Regression line (Hired Labor)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+# 5. Scatter plot for Total Labor vs. Years Elapsed
+ggplot(combined_tidy, aes(x = years_elapsed, y = avg_total_labor)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", color = "blue", se = FALSE) +  # Regression line for total labor
+  labs(title = "Total Labor vs. Years Elapsed", 
+       x = "Years Elapsed", 
+       y = "Average Total Labor",
+       caption = "Regression line (Total Labor)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  )
+
+# 6. Scatter plot for Hired Labor vs. Years Elapsed
+ggplot(combined_tidy, aes(x = years_elapsed, y = avg_hired_labor)) +
+  geom_point() +  # Scatter plot
+  geom_smooth(method = "lm", color = "red", se = FALSE) +  # Regression line for hired labor
+  labs(title = "Hired Labor vs. Years Elapsed", 
+       x = "Years Elapsed", 
+       y = "Average Hired Labor",
+       caption = "Regression line (Hired Labor)") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.caption = element_text(hjust = 0.5, size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  ) 
+```
+
+
+
+
