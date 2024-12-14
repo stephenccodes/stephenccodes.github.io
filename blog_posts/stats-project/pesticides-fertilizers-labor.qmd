@@ -1,123 +1,92 @@
 ---
-title: "eds222-final-project"
-format: html
-editor: visual
-editor_options: 
-  chunk_output_type: console
+title: "Examing the impact on Fertilizer & Pesticide Use on Agricultural Labor Needs"
+description: "A deep dive into how the rapid rise in artificial inputs in the 20th century affected labor needs on farms."
+author: 
+    - name: Stephen Carroll
+      url: http://stephenccodes.github.io/
+      affiliation: MEDS
+      affiliation-url: https://bren.ucsb.edu/masters-programs/master-environmental-data-science/academics-meds-program
+date: 2024-10-18
+categories: [Quarto, MEDS]
+toc: true
+bibliography: references.bib
+#csl: #example cslstyle.csl from zotero
+#image: img_file.png (from this blog_posts file folder)
+citation: 
+  url: https://stephenccodes.github.io/blog/fertilizer-pesticides-and-labor/
 ---
 
 **Final Project**
 
-*Data*
-- Source(s)?
-- Completeness?
-- Processing?
+*Data* - Source(s)? - Completeness? - Processing?
 
-*Explore*
-- Visualize
-- Summarize
-- Hypothesize
+*Explore* - Visualize - Summarize - Hypothesize
 
-*Analysis*
-- Method?
-- Implementation?
-- Diagnostics?
+*Analysis* - Method? - Implementation? - Diagnostics?
 
 What is my hypothesis.
 
 Determine the P-value.
 
-Spend a lot of time on the methods, explain research question, objective, where the data is from. Add citations where applicable. Does the data satisfy the needs of the analysis?  EX: “ I need to do another test because my results aren’t robust enough” 
+Spend a lot of time on the methods, explain research question, objective, where the data is from. Add citations where applicable. Does the data satisfy the needs of the analysis? EX: “ I need to do another test because my results aren’t robust enough”
 
 Linear or logistic regression based on hypothesis and data.
 
 Determine/explain what the indexes are representative of.
 
-Tidy the data, make it longer and compare state by region and make it a categorical variable for a logistic regression: “How likely is it that a state is in a  given region based on the values for fert/pest use”. Or I could compare a state to the national average. 
+Tidy the data, make it longer and compare state by region and make it a categorical variable for a logistic regression: “How likely is it that a state is in a given region based on the values for fert/pest use”. Or I could compare a state to the national average.
 
 Remove yield consideration from research question: it is already assumed that pest/fert affects yields.
 
-Potential OVB: is total area represented?  because that affects yield.
-
+Potential OVB: is total area represented? because that affects yield.
 
 **Outline**
 
-*Intro*
-- Introduction
-- Data summary & citation
-- Determine what indices mean and what category of labor to look at
-- Research question & objective
+*Intro* - Introduction - Data summary & citation - Determine what indices mean and what category of labor to look at - Research question & objective
 
-*Setup*
-- Load packages
-- Read in data
+*Setup* - Load packages - Read in data
 
+*Data preparation* - Remove extraneous rows/columns - Pivot longer - Add region column? - Convert indices to actual values?
 
-*Data preparation*
-- Remove extraneous rows/columns
-- Pivot longer
-- Add region column?
-- Convert indices to actual values?
+*Data exploration & processing* - Visualize data -Trend analysis - Time-series plots - Seasonal, cyclical, or long term trend? - Correlation analysis - Correlation matrix - Scatter plots - Find the p-value - Hypo statements - Determine methods - Summary statistic(s) - Note missing data
 
-*Data exploration & processing*
-- Visualize data
-  -Trend analysis
-      - Time-series plots
-      - Seasonal, cyclical, or long term trend?
-  - Correlation analysis
-      - Correlation matrix
-      - Scatter plots
-- Find the p-value
-- Hypo statements
-- Determine methods
-- Summary statistic(s)
-- Note missing data
+*Analysis* - Labor is for USA so focus on a country average for all
 
-*Analysis*
-- Labor is for USA so focus on a country average for all
+-   Linear regression
+    -   Pesticide vs Fertilizer
+    -   Labor cost vs other variables
+    -   Time trend for each variable
+-   Multi-linear regression
+    -   Use different quartiles of fertilizer and pesticide use
+-   Interaction regression
+    -   Do fertilizer use change determining on pesticide use and vice versa?
+-   Residual analysis
+    -   Model fit: R\^2 and p-values relative to alpha = 0.05
+-   Time???
 
-- Linear regression
-  - Pesticide vs Fertilizer
-  - Labor cost vs other variables
-  - Time trend for each variable
+*Interpretation* - Coefficients
 
-- Multi-linear regression   
-  - Use different quartiles of fertilizer and pesticide use
+-   Time Trends
 
-- Interaction regression
-  - Do fertilizer use change determining on pesticide use and vice versa?
+-   Limitations
 
-- Residual analysis
-  - Model fit: R^2 and p-values relative to alpha = 0.05
+    -   Discuss possible OVB or other limitations on ability to draw meaningful conclusions due ot influence on trends
+        -   Total area in use
+        -   Technology changes
+        -   Policy changes
+        -   Environmental changes
+    -   Include other information
+        -   Macroeconomic trends
+            -   Inflation
+            -   Cost of living *Housekeeping*
 
-- Time???
+-   Data citations
 
-*Interpretation* 
-- Coefficients
+-   Slide deck for presentation
 
-- Time Trends
+-   Images for blog
 
-- Limitations 
-  - Discuss possible OVB or other limitations on ability to draw meaningful conclusions due ot influence on trends
-    - Total area in use
-    - Technology changes
-    - Policy changes
-    - Environmental changes
-  
-  - Include other information
-    - Macroeconomic trends
-      - Inflation
-      - Cost of living
-*Housekeeping*
-- Data citations
-- Slide deck for presentation
-- Images for blog
-- Analysis summary (1500 words)
-
-
-
-
-
+-   Analysis summary (1500 words)
 
 ```{r}
 library(tidyverse)
@@ -126,8 +95,7 @@ library(here)
 library(readxl)
 ```
 
-
-# crop_output <- read_excel(here("data/new_crop_output_state.xls"))
+# crop_output \<- read_excel(here("data/new_crop_output_state.xls"))
 
 ```{r}
 # Read in pesticide data
@@ -173,7 +141,6 @@ filtered_labor <- labor[apply(labor, 1, function(row) any(grepl("labor", row, ig
 
 ```
 
-
 ```{r}
 # Pivoting the data so that each attribute becomes its own column
 labor_clean <- filtered_labor %>%
@@ -216,14 +183,10 @@ ggplot(labor_tidy, aes(x = Year, y = avg_total_labor)) +
   geom_line()
 ```
 
-
-
-
 ```{r}
 ggplot(pesticide_tidy, aes(x = Year, y = avg_pesticide)) +
   geom_point()
 ```
-
 
 ```{r}
 # Merge the pesticide_tidy, fertilizer_tidy, and labor_tidy dataframes by the 'Year' column
@@ -238,8 +201,6 @@ combined_tidy <- combined_tidy %>%
 # View the updated dataframe
 head(combined_tidy)
 ```
-
-
 
 ```{r}
 # Plot the trend of pesticide use over time
@@ -285,8 +246,6 @@ ggplot(combined_tidy, aes(x = Year, y = avg_fertilizer)) +
   )
 ```
 
-
-
 ```{r}
 # Plot the trend of labor needs over time
 ggplot(combined_tidy, aes(x = Year)) +
@@ -328,7 +287,6 @@ print(n = 60, fertilizer_tidy)
 print(n = 60, combined_tidy)
 ```
 
-
 ```{r}
 # Create time-series plots for each variable
 ggplot(combined_tidy, aes(x = Year, y = avg_pesticide)) +
@@ -352,7 +310,6 @@ ggplot(combined_tidy, aes(x = Year, y = avg_hired_labor)) +
   theme_minimal()
 
 ```
-
 
 ```{r}
 library(knitr)
@@ -395,7 +352,6 @@ ggplot(combined_tidy, aes(x = avg_fertilizer, y = avg_hired_labor)) +
 
 ```
 
-
 ```{r}
 
 
@@ -415,7 +371,6 @@ hired_labor_model <- lm(avg_hired_labor ~ avg_pesticide + avg_fertilizer + years
 # View the summary of this model
 summary(hired_labor_model)
 ```
-
 
 ```{r}
 # Extract the summaries for both models
@@ -476,7 +431,6 @@ hired_labor_plot <- ggplot(combined_tidy, aes(x = Year, y = avg_hired_labor)) +
 grid.arrange(total_labor_plot, hired_labor_plot, ncol = 2)
 
 ```
-
 
 ```{r}
 # 1. Scatter plot for Total Labor (avg_total_labor) vs. Pesticide use (avg_pesticide)
@@ -575,7 +529,3 @@ ggplot(combined_tidy, aes(x = years_elapsed, y = avg_hired_labor)) +
     axis.text = element_text(size = 12)
   ) 
 ```
-
-
-
-
