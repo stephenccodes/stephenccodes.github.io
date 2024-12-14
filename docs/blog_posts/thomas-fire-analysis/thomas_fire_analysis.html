@@ -217,7 +217,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#purpose" id="toc-purpose" class="nav-link" data-scroll-target="#purpose">Purpose:</a></li>
   <li><a href="#highlights" id="toc-highlights" class="nav-link" data-scroll-target="#highlights">Highlights:</a></li>
   <li><a href="#data-description" id="toc-data-description" class="nav-link" data-scroll-target="#data-description">Data Description:</a></li>
-  <li><a href="#acknowledegements" id="toc-acknowledegements" class="nav-link" data-scroll-target="#acknowledegements">Acknowledegements</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#part-1-true-and-false-color-imagery-of-teh-2017-thomas-fire" id="toc-part-1-true-and-false-color-imagery-of-teh-2017-thomas-fire" class="nav-link" data-scroll-target="#part-1-true-and-false-color-imagery-of-teh-2017-thomas-fire">Part 1: True and False Color Imagery of teh 2017 Thomas Fire</a>
@@ -248,7 +247,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data-importation" id="toc-data-importation" class="nav-link" data-scroll-target="#data-importation">Data importation:</a></li>
   <li><a href="#data-cleaning-and-filtering" id="toc-data-cleaning-and-filtering" class="nav-link" data-scroll-target="#data-cleaning-and-filtering">Data cleaning and filtering:</a></li>
   <li><a href="#data-analysis" id="toc-data-analysis" class="nav-link" data-scroll-target="#data-analysis">Data analysis:</a></li>
-  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data visualization:</a></li>
+  <li><a href="#data-visualization" id="toc-data-visualization" class="nav-link" data-scroll-target="#data-visualization">Data visualization:</a>
+  <ul class="collapse">
+  <li><a href="#reference-list" id="toc-reference-list" class="nav-link" data-scroll-target="#reference-list"><strong>Reference List:</strong></a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -265,15 +268,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="a-visualization-of-the-extent-and-aqi-impact" class="level2">
 <h2 class="anchored" data-anchor-id="a-visualization-of-the-extent-and-aqi-impact">A visualization of the extent and AQI impact</h2>
 <p><img src="images/thomas-fire-3.jpeg" width="600"></p>
+<p>Image credit: <a href="https://www.kcbx.org/fire/2017-12-27/thomas-fire-at-89-percent-containment">kcbx.org</a></p>
 <p>Author: Stephen Carroll</p>
-<p>This project repository can be found at: https://github.com/stephenccodes/thomas-fire-analysis</p>
+<p>This project repository can be found at: <a href="https://github.com/stephenccodes/thomas-fire-analysis">https://github.com/stephenccodes/thomas-fire-analysis</a></p>
 </section>
 <section id="about" class="level2">
 <h2 class="anchored" data-anchor-id="about"><ins>About</ins></h2>
 <section id="purpose" class="level3">
 <h3 class="anchored" data-anchor-id="purpose">Purpose:</h3>
-<p>The intent of this notebook is to analyze two components of the 2017 Thomas Fire: - use remote sensing and fire perimeter data to create a false-color map of the fire and the surrounding area. - use air quality index(AQI) data to visualize the effect the fire had on air quality in surrounding communites.</p>
-<p>The map will indicate the extent of the fire scar, and highlight areas that contain vegetation or bare soil with more contrast than a true color image. The AQI data will be visualized using a line graph and display how the fire affected the air quality over time. These goals will be achieved through various data analysis techniques and iterations of plots, outlined below.</p>
+<p>The intent of this notebook is to analyze two components of the 2017 Thomas Fire:</p>
+<ul>
+<li>use remote sensing and fire perimeter data to create a false-color map of the fire and the surrounding area.</li>
+<li>use air quality index (AQI) data to visualize the effect the fire had on air quality in surrounding communities.</li>
+</ul>
+<p>This analysis examines the impact of the 2017 Thomas Fire on air quality in Santa Barbara County. The Thomas Fire burned over 280,000 acres in Ventura and Santa Barbara counties in December 2017, causing significant ecological &amp; environmental damage and displacing communities. Wildfire smoke is a well-known health hazard, and one way to assess its impact is through air quality index measurements. The air quality index (AQI) is used to measure air pollution levels and is a scale ranging from 0 to 500. Scores between 0-50 are considered good, while those from 151-200 are unhealthy, and 301-500 are hazardous. This analysis will use AQI data to explore how the Thomas Fire influenced air quality and environmental health in Santa Barbara County.</p>
+<p>To visualize these effects, the analysis will include a map that highlights the fire scar and distinguishes areas with vegetation or bare soil, providing a contrast to a true-color image. Additionally, AQI data will be represented in a line graph, illustrating how the fire impacted air quality over time. These insights will be drawn using various data analysis techniques outlined below.</p>
 </section>
 <section id="highlights" class="level3">
 <h3 class="anchored" data-anchor-id="highlights">Highlights:</h3>
@@ -291,32 +300,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="data-description">Data Description:</h3>
 <section id="landsat-collection-2-level-2" class="level4">
 <h4 class="anchored" data-anchor-id="landsat-collection-2-level-2"><ins>Landsat Collection 2 Level-2</ins></h4>
-<p>This data is a simplified collection of bands (red, green, blue, near-infrared, and shortwave infrared) from the Landsat Collection 2 Level-2 atmosperically corrected surface reflectance data, collected by the Landsat 8 satellite. The data was retrieved from the Microsof Planetary Computer data catalogue and pre-processed to remove data outside land and coarsen the spatial resolution.</p>
+<p>This data is a simplified collection of bands (red, green, blue, near-infrared, and shortwave infrared) from the Landsat Collection 2 Level-2 atmospherically corrected surface reflectance data, collected by the Landsat 8 satellite. The data was retrieved from the Microsoft Planetary Computer data catalogue and pre-processed to remove data outside land and coarsen the spatial resolution.</p>
 <p>Date accessed: 11/19/24</p>
-<p>Original data source:</p>
-<p><a href="https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2">https://planetarycomputer.microsoft.com/dataset/landsat-c2-l2</a></p>
 </section>
 <section id="california-fire-perimeters" class="level4">
 <h4 class="anchored" data-anchor-id="california-fire-perimeters"><ins>California Fire Perimeters</ins></h4>
 <p>This database contains information about spatial distribution of historic wild and prescribed fires in the state of California. The data comes with a warning that it is not comprehensive, with some records lost or damaged, fire perimeters may be missing. There may also be duplicate fires and over-generalization of fire perimeters. The database is maintained by the California Department of Forestry and Fire Protection’s Fire and Resource Assessment Program.</p>
 <p>Date accessed: 11/19/24</p>
-<p>Original data source:</p>
-<p>https://catalog.data.gov/dataset/california-fire-perimeters-all-b3436</p>
 </section>
 <section id="california-county-air-quality-index" class="level4">
 <h4 class="anchored" data-anchor-id="california-county-air-quality-index"><ins>California County Air Quality Index</ins></h4>
-<p>These are two datatsets that have daily air quality index(AQI) measurements for each county in California. The data was collected for airgov.now on behalf of the Environmental Portection Agency.</p>
-<p>Date accessed: 10/26/24 ### <strong>Reference List:</strong></p>
-<ol type="1">
-<li><p>U.S. Geological Survey. (n.d.). <em>Landsat 8-9 OLI/TIRS collection 2 level-2 science products | USGS EROS Archive</em>. U.S. Geological Survey. https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2 Access date: November 19, 2024.</p></li>
-<li><p>Data.gov. (2024). <em>California fire perimeters (ALL)</em>. Data.gov. https://catalog.data.gov/dataset/california-fire-perimeters-all-b3436 Access date: November 19, 2024.</p></li>
-<li><p>Airnow.gov. (2017-2018). <em>US Environmental Protection Agency.</em> <a href="https://www.airnow.gov/aqi/aqi-basics/">Air Quality Index (AQI)</a> data from the <a href="https://www.epa.gov">US Environmental Protection Agency</a> Access date: October 26, 2024.</p></li>
-</ol>
+<p>These are two datasets that have daily air quality index (AQI) measurements for each county in California. We will use data for the years 2017 and 2018. The Thomas Fire was in late 2017, so it will help to understand the impact by setting a reference for ‘normal’ conditions before and after the fire occurred. The data was collected for airgov.now on behalf of the Environmental Protection Agency.</p>
+<p>Date accessed: 10/26/24</p>
 </section>
-</section>
-<section id="acknowledegements" class="level3">
-<h3 class="anchored" data-anchor-id="acknowledegements">Acknowledegements</h3>
-<p>All materials were created by <a href="https://github.com/carmengg">Carmen Galaz-Garcia</a> for <a href="https://meds-eds-220.github.io/MEDS-eds-220-course/">EDS-220: Working with Environmental Data</a>.</p>
 </section>
 </section>
 </section>
@@ -588,8 +584,20 @@ Data type:
 </div>
 </div>
 </div>
+<section id="reference-list" class="level3">
+<h3 class="anchored" data-anchor-id="reference-list"><strong>Reference List:</strong></h3>
+<ol type="1">
+<li><p>U.S. Geological Survey. (n.d.). <em>Landsat 8-9 OLI/TIRS collection 2 level-2 science products | USGS EROS Archive</em>. U.S. Geological Survey. https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2 Access date: November 19, 2024.</p></li>
+<li><p>Data.gov. (2024). <em>California fire perimeters (ALL)</em>. Data.gov. https://catalog.data.gov/dataset/california-fire-perimeters-all-b3436 Access date: November 19, 2024.</p></li>
+<li><p>Airnow.gov. (2017-2018). <em>US Environmental Protection Agency.</em> <a href="https://www.airnow.gov/aqi/aqi-basics/">Air Quality Index (AQI)</a> data from the <a href="https://www.epa.gov">US Environmental Protection Agency</a> Access date: October 26, 2024.</p></li>
+</ol>
+</section>
+<section id="acknowledgements" class="level3">
+<h3 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h3>
+<p>All materials were created by <a href="https://github.com/carmengg">Carmen Galaz-Garcia</a> for <a href="https://meds-eds-220.github.io/MEDS-eds-220-course/">EDS-220: Working with Environmental Data</a>.</p>
 
 
+</section>
 </section>
 </section>
 
