@@ -74,9 +74,9 @@ The response variable is 'total_labor', and represents all forms of labor demand
 
 This model will enable me to assess the extent to which changes in these factors predict the demand in labor. By examining these patterns over time we can attempt to draw conclusions about how the increasing reliance on synthetic chemicals has influenced labor dynamics in agriculture, potentially providing valuable insight into the economic impacts of different farming practices.
 
-### Logistic Regression
+### Gamma Regression
 
-Though I don't believe my variables to be categorical, if linear regression does not yield convincing results, I will turn to logistic analysis. Having a secondary method of analysis may prove valuable if my predictor variables are insufficient to draw conclusions. Trying both models allows me to compare their performance and ensure I’m using the most appropriate approach for my analysis. Herre is an example of a model that I might use:
+Though I don't believe my variables to be categorical, if linear regression does not yield convincing results, I will turn to gamma analysis. Having a secondary method of analysis may prove valuable if my predictor variables are insufficient to draw conclusions. Trying both models allows me to compare their performance and ensure I’m using the most appropriate approach for my analysis. Herre is an example of a model that I might use:
 
 $$\log(\mathbb{E}[\text{labor}]) = \beta_0 + \beta_1 \cdot \text{pesticide} + \beta_2 \cdot \text{year} + \beta_3 \cdot (\text{pesticide} \times \text{year})$$
 
@@ -510,9 +510,9 @@ It looks like our suspicions were correct. We need to find a new way to analyze 
   </figcaption>
 </figure>
 
-## Logistic Regression Analysis
+## Gamma Regression Analysis
 
-We know that both labor parameters are collinear as well as pesticide & fertilizer. Because it's a redundant predictor, Let's drop fertilizer and just focus on pesticide use for this next model. We've also learned that the data isn't normal. To try and normalize the distribution of residuals, we need to transform our data. Though we know the increase in use of pesticides and fertilizers isn't going to be exponential, the initial plot for their growth trend did somewhat reflect an exponential curve. Let's try using a Generalized Linear Model (GLM), with a log link function to get a better model fit.
+We know that both labor parameters are collinear as well as pesticide & fertilizer. Because it's a redundant predictor, Let's drop fertilizer and just focus on pesticide use for this next model. We've also learned that the data isn't normal. To try and normalize the distribution of residuals, we need to transform our data. Though we know the increase in use of pesticides and fertilizers isn't going to be exponential, the initial plot for their growth trend did somewhat reflect an exponential curve. Let's try using a Generalized Linear Model (GLM), with a log link function to get a better model fit with a Gamma Regression.
 
 <div style="max-width: 600px; margin: 0 auto; margin-right: 20px; font-size: 14px;">
   $\log(\mathbb{E}[\text{avg\_total\_labor}]) = \beta_0 + \beta_1 \cdot \text{avg\_pesticide} + \beta_2 \cdot \text{years\_elapsed} + \beta_3 \cdot (\text{avg\_pesticide} \times \text{years\_elapsed})$
@@ -549,14 +549,14 @@ labor_glm_df <- as.data.frame(labor_glm_summary)
 # Populate the data frame with the variable names and their corresponding values
 colnames(labor_glm_df) <- c("Estimate", "Std. Error", "t value", "p-value")
 labor_glm_df$Variable <- rownames(labor_glm_df)
-labor_glm_df$Model <- "GLM Labor"
+labor_glm_df$Model <- "Gamma Labor"
 
 # Remove row names (index) by resetting the row names to NULL
 rownames(labor_glm_df) <- NULL
 
 labor_glm_table <- kable(labor_glm_df[, c("Variable", "Estimate", "Std. Error", "t value", "p-value")],
                             digits = 3,
-                            caption = "Regression Coefficients for Labor Generalized Linear Model") %>% 
+                            caption = "Regression Coefficients for Labor Gamma Regression Model") %>% 
  kable_styling(bootstrap_options = "striped", full_width = FALSE, position = "center") %>%
   column_spec(1:5, background = "white")
 
@@ -565,19 +565,19 @@ labor_glm_table
 
 Progress! It looks like our p-value for 'avg_pesticide' is roughly half of what our last model produced. This is a meaningless improvement however, as the new value is still statistically insignificant at $\alpha$ < 0.05 with a value of 0.34. Let's check to see if this new method produced data that is normal and homoscedastic, using the same methods from before.
 
-### Logistic Model Evaluation
+### Gamma Model Evaluation
 
 ```{r}
-# Generate predictions and residuals for avg_total_labor using the glm model
+# Generate predictions and residuals for avg_total_labor using the gamma model
 combined_glm <- combined_tidy %>%
   mutate(predicted_labor = predict(labor_glm, type = "response")) %>% 
   mutate(residuals_glm = residuals.glm(labor_glm))
 
 
-# Plot a histogram of glm residuals to check normality
+# Plot a histogram of gamma residuals to check normality
 glm_hist_plot <- ggplot(combined_glm, aes(x = residuals_glm)) +
   geom_histogram(bins = 30, fill = "lavender", color = "black", alpha = 0.5) +
-  labs(title = "Histogram of GLM Residuals", x = "Residuals", y = "Frequency") +
+  labs(title = "Histogram of Gamma Regression Residuals", x = "Residuals", y = "Frequency") +
   theme_minimal()  +
   theme(plot.title = element_text(hjust = 0.5))  # Center the title
 
@@ -586,7 +586,7 @@ glm_hist_plot <- ggplot(combined_glm, aes(x = residuals_glm)) +
 glm_qq_plot <- ggplot(combined_glm, aes(sample = predicted_labor)) +
   stat_qq() +
   stat_qq_line(color = "firebrick", alpha = 0.5) +
-  labs(title = "Q-Q Plot of GLM Residuals") +
+  labs(title = "Q-Q Plot of Gamma Regression Residuals") +
   theme_minimal()  +
   theme(plot.title = element_text(hjust = 0.5))  # Center the title
 
@@ -595,7 +595,7 @@ glm_qq_plot <- ggplot(combined_glm, aes(sample = predicted_labor)) +
 glm_fitted_resdid_plot <- ggplot(combined_glm, aes(x = predicted_labor, y = residuals_glm)) +
   geom_point() +
   geom_hline(yintercept = 0, color = "tomato", linetype = "dashed") +
-  labs(x = "Fitted Values", y = "Residuals", title = "GLM Residuals vs Fitted Values") +
+  labs(x = "Fitted Values", y = "Residuals", title = "Gamma Regression Residuals vs Fitted Values") +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5))  # Center the title
 
@@ -605,34 +605,35 @@ glm_qq_plot
 glm_fitted_resdid_plot
 ```
 
-After further investigation, it's clear that this model didn't produce normally distributed data either. Our histogram of GLM residuals is closer to a normal distribution, but it's asymmetric with a right tail. Our Q-Q plot of GLM residuals is also a better fit, with at least half of the points landing on the line of normality. Still, the extreme high and low values deviate from the line. When we plotted the fitted GLM data versus the residual GLM data, the result is a funnel similar to the first graph. Though improved, this model did not produce normal or homoscedastic data and is therefore not worthwhile as a means to predict total labor cost from pesticide use and year alone.
+After further investigation, it's clear that this model didn't produce normally distributed data either. Our histogram of GLM residuals is closer to a normal distribution, but it's asymmetric with a right tail. Our Q-Q plot of Gamma regression residuals is also a better fit, with at least half of the points landing on the line of normality. Still, the extreme high and low values deviate from the line. When we plotted the fitted Gamma data versus the residual Gamma data, the result is a funnel similar to the first graph. Though improved, this model did not produce normal or homoscedastic data and is therefore not worthwhile as a means to predict total labor cost from pesticide use and year alone.
 
 ### Visualizing Both Linear and Non-Linear Models
 
-Let's compare each model by plotting our data and regression lines. Can we see a demontrable difference in outcome?
+Let's compare each model by plotting our data and regression lines. Can we see a demonstrable difference in outcome?
 
 ```{r}
 # Create the plot for Total Labor Model
 total_labor_plot <- ggplot(combined_glm, aes(x = years_elapsed, y = avg_total_labor)) +
   geom_point(color = "slategray", size = 2) +  # Scatter plot for avg_total_labor
   geom_smooth(method = "lm", formula = y ~ x, color = "firebrick", linetype = "solid") +  # Regression line for total_labor_model
-  labs(subtitle = "Linear Model", title = "Total Labor Demand After 1960", x = "Years Past 1960", y = "Average Total Labor") +
+  labs(subtitle = "Linear Regression Model", title = "Total Labor Demand After 1960", x = "Years Past 1960", y = "Average Total Labor") +
   theme_minimal()  +
   theme(plot.title = element_text(hjust = 0.5), # Center the title
         plot.subtitle = element_text(hjust = 0.5))  # Center the subtitle
 
 
-# Create the plot for Total Labor GLM
+# Create the plot for Total Labor Gamma
 total_labor_glm_plot <- ggplot(combined_glm, aes(x = years_elapsed, y = predicted_labor)) +
   geom_point(color = "forestgreen", size = 2) +  # Scatter plot for avg_total_labor
   geom_line(aes(y = predicted_labor),, color = "slateblue", linetype = "solid") +  # Regression line for total_labor_model
-  labs(subtitle = "Generalized Linear Model", title = "Predicted Total Labor Demand \nAfter 1960", x = "Years Past 1960", y = "Predicted Average Total Labor") +
+  labs(subtitle = "Gamma Regression Model", title = "Predicted Total Labor Demand \nAfter 1960", x = "Years Past 1960", y = "Predicted Average Total Labor") +
   theme_minimal()  +
   theme(plot.title = element_text(hjust = 0.5), # Center the subtitle
         plot.subtitle = element_text(hjust = 0.5))  # Center the title
 
 # Display both plots side by side
-total_labor_plot + total_labor_glm_plot + plot_layout(ncol = 2)
+print(total_labor_plot)  
+print(total_labor_glm_plot) 
 ```
 
 ## Results
@@ -643,7 +644,7 @@ Our linear regression analysis also found that labor demand has dropped signific
 
 Further investigation of the efficacy of our model suggest that it is a poor fit to draw any conclusions from. When plotted, the data did not have a normal distribution, the variance was not consistent, diverging at extreme values, and the coefficient p-values were not of significance.
 
-A revised logistic regression had slightly more convincing results, but still nothing concrete. We were able to get our coefficient p-value to half of what it was initially, and the data was more normally distributed, but it remained heteroscedastic and the p-value was still insgnificant despite being lower.
+A revised gamma regression had slightly more convincing results, but still nothing concrete. We were able to get our coefficient p-value to half of what it was initially, and the data was more normally distributed, but it remained heteroscedastic and the p-value was still insignificant despite being lower.
 
 Looking back at our Null and Alternative hypotheses, it's impossible to be conclusive. Based on our findings, we fail to reject our null hypothesis that pesticide and fertilizer use do not have a significant effect on labor demand. Both of our predictive models yielded coefficient p-values notably higher than the convention for significance of $alpha$ < 0.05.
 
@@ -653,7 +654,7 @@ Despite our findings that neither model is a perfect fit, we can still learn som
 
 ### Additional Considerations & Possible Next Steps
 
-To improve on this analysis in the future, omitted variables need to be identified and included in the logistic regression model. There are likely more than one significant predictors that are closely correlated to our 'years_elapsed' variable. 
+To improve on this analysis in the future, omitted variables need to be identified and included in the gamma regression model. There are likely more than one significant predictors that are closely correlated to our 'years_elapsed' variable. 
 
 <figure style="float: right; margin-right: 15px; text-align: center;">
   <img src="images/finger-weeder.gif" width="290px" style="display: block; margin-bottom: 5px;">

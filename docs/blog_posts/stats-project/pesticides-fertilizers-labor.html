@@ -10,7 +10,7 @@
 <meta name="dcterms.date" content="2024-12-14">
 <meta name="description" content="How the rapid rise in synthetic inputs during the 20th century affected labor needs on farms.">
 
-<title>Examing the Impact of Fertilizer &amp; Pesticide Use on Agricultural Labor Needs – Stephen Carroll</title>
+<title>Examing the Impact of Fertilizer &amp; Pesticide Use on Agricultural Labor Demands – Stephen Carroll</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -190,7 +190,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-page-left">
-      <h1 class="title">Examing the Impact of Fertilizer &amp; Pesticide Use on Agricultural Labor Needs</h1>
+      <h1 class="title">Examing the Impact of Fertilizer &amp; Pesticide Use on Agricultural Labor Demands</h1>
                   <div>
         <div class="description">
           How the rapid rise in synthetic inputs during the 20th century affected labor needs on farms.
@@ -248,7 +248,7 @@ window.Quarto = {
   <li><a href="#analysis-plan" id="toc-analysis-plan" class="nav-link" data-scroll-target="#analysis-plan">Analysis Plan</a>
   <ul class="collapse">
   <li><a href="#multiple-linear-regression" id="toc-multiple-linear-regression" class="nav-link" data-scroll-target="#multiple-linear-regression">Multiple Linear Regression</a></li>
-  <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
+  <li><a href="#gamma-regression" id="toc-gamma-regression" class="nav-link" data-scroll-target="#gamma-regression">Gamma Regression</a></li>
   <li><a href="#hypothesis-statement" id="toc-hypothesis-statement" class="nav-link" data-scroll-target="#hypothesis-statement">Hypothesis Statement</a></li>
   </ul></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
@@ -264,9 +264,9 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#linear-model-evaluation" id="toc-linear-model-evaluation" class="nav-link" data-scroll-target="#linear-model-evaluation">Linear Model Evaluation</a></li>
   </ul></li>
-  <li><a href="#logistic-regression-analysis" id="toc-logistic-regression-analysis" class="nav-link" data-scroll-target="#logistic-regression-analysis">Logistic Regression Analysis</a>
+  <li><a href="#gamma-regression-analysis" id="toc-gamma-regression-analysis" class="nav-link" data-scroll-target="#gamma-regression-analysis">Gamma Regression Analysis</a>
   <ul class="collapse">
-  <li><a href="#logistic-model-evaluation" id="toc-logistic-model-evaluation" class="nav-link" data-scroll-target="#logistic-model-evaluation">Logistic Model Evaluation</a></li>
+  <li><a href="#gamma-model-evaluation" id="toc-gamma-model-evaluation" class="nav-link" data-scroll-target="#gamma-model-evaluation">Gamma Model Evaluation</a></li>
   <li><a href="#visualizing-both-linear-and-non-linear-models" id="toc-visualizing-both-linear-and-non-linear-models" class="nav-link" data-scroll-target="#visualizing-both-linear-and-non-linear-models">Visualizing Both Linear and Non-Linear Models</a></li>
   </ul></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
@@ -323,9 +323,9 @@ window.Quarto = {
 <p>The response variable is ‘total_labor’, and represents all forms of labor demand in commercial agriculture operations in the country. The <span class="math inline">\(\beta\)</span>s represent the regression coefficients, each representing a predictor variable, all of which are continuous. This assumes that there is a linear relationship between ‘total_labor’ and each independent predictor variable.</p>
 <p>This model will enable me to assess the extent to which changes in these factors predict the demand in labor. By examining these patterns over time we can attempt to draw conclusions about how the increasing reliance on synthetic chemicals has influenced labor dynamics in agriculture, potentially providing valuable insight into the economic impacts of different farming practices.</p>
 </section>
-<section id="logistic-regression" class="level3">
-<h3 class="anchored" data-anchor-id="logistic-regression">Logistic Regression</h3>
-<p>Though I don’t believe my variables to be categorical, if linear regression does not yield convincing results, I will turn to logistic analysis. Having a secondary method of analysis may prove valuable if my predictor variables are insufficient to draw conclusions. Trying both models allows me to compare their performance and ensure I’m using the most appropriate approach for my analysis. Herre is an example of a model that I might use:</p>
+<section id="gamma-regression" class="level3">
+<h3 class="anchored" data-anchor-id="gamma-regression">Gamma Regression</h3>
+<p>Though I don’t believe my variables to be categorical, if linear regression does not yield convincing results, I will turn to gamma analysis. Having a secondary method of analysis may prove valuable if my predictor variables are insufficient to draw conclusions. Trying both models allows me to compare their performance and ensure I’m using the most appropriate approach for my analysis. Herre is an example of a model that I might use:</p>
 <p><span class="math display">\[\log(\mathbb{E}[\text{labor}]) = \beta_0 + \beta_1 \cdot \text{pesticide} + \beta_2 \cdot \text{year} + \beta_3 \cdot (\text{pesticide} \times \text{year})\]</span></p>
 </section>
 <section id="hypothesis-statement" class="level3">
@@ -976,9 +976,9 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="logistic-regression-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="logistic-regression-analysis">Logistic Regression Analysis</h2>
-<p>We know that both labor parameters are collinear as well as pesticide &amp; fertilizer. Because it’s a redundant predictor, Let’s drop fertilizer and just focus on pesticide use for this next model. We’ve also learned that the data isn’t normal. To try and normalize the distribution of residuals, we need to transform our data. Though we know the increase in use of pesticides and fertilizers isn’t going to be exponential, the initial plot for their growth trend did somewhat reflect an exponential curve. Let’s try using a Generalized Linear Model (GLM), with a log link function to get a better model fit.</p>
+<section id="gamma-regression-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="gamma-regression-analysis">Gamma Regression Analysis</h2>
+<p>We know that both labor parameters are collinear as well as pesticide &amp; fertilizer. Because it’s a redundant predictor, Let’s drop fertilizer and just focus on pesticide use for this next model. We’ve also learned that the data isn’t normal. To try and normalize the distribution of residuals, we need to transform our data. Though we know the increase in use of pesticides and fertilizers isn’t going to be exponential, the initial plot for their growth trend did somewhat reflect an exponential curve. Let’s try using a Generalized Linear Model (GLM), with a log link function to get a better model fit with a Gamma Regression.</p>
 <div style="max-width: 600px; margin: 0 auto; margin-right: 20px; font-size: 14px;">
 <p><span class="math inline">\(\log(\mathbb{E}[\text{avg\_total\_labor}]) = \beta_0 + \beta_1 \cdot \text{avg\_pesticide} + \beta_2 \cdot \text{years\_elapsed} + \beta_3 \cdot (\text{avg\_pesticide} \times \text{years\_elapsed})\)</span></p>
 </div>
@@ -1011,14 +1011,14 @@ window.Quarto = {
 <span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Populate the data frame with the variable names and their corresponding values</span></span>
 <span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(labor_glm_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Estimate"</span>, <span class="st">"Std. Error"</span>, <span class="st">"t value"</span>, <span class="st">"p-value"</span>)</span>
 <span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>labor_glm_df<span class="sc">$</span>Variable <span class="ot">&lt;-</span> <span class="fu">rownames</span>(labor_glm_df)</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>labor_glm_df<span class="sc">$</span>Model <span class="ot">&lt;-</span> <span class="st">"GLM Labor"</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>labor_glm_df<span class="sc">$</span>Model <span class="ot">&lt;-</span> <span class="st">"Gamma Labor"</span></span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove row names (index) by resetting the row names to NULL</span></span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(labor_glm_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>labor_glm_table <span class="ot">&lt;-</span> <span class="fu">kable</span>(labor_glm_df[, <span class="fu">c</span>(<span class="st">"Variable"</span>, <span class="st">"Estimate"</span>, <span class="st">"Std. Error"</span>, <span class="st">"t value"</span>, <span class="st">"p-value"</span>)],</span>
 <span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>                            <span class="at">digits =</span> <span class="dv">3</span>,</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                            <span class="at">caption =</span> <span class="st">"Regression Coefficients for Labor Generalized Linear Model"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>                            <span class="at">caption =</span> <span class="st">"Regression Coefficients for Labor Gamma Regression Model"</span>) <span class="sc">%&gt;%</span> </span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a> <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="st">"striped"</span>, <span class="at">full_width =</span> <span class="cn">FALSE</span>, <span class="at">position =</span> <span class="st">"center"</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">background =</span> <span class="st">"white"</span>)</span>
 <span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a></span>
@@ -1026,7 +1026,7 @@ window.Quarto = {
 </details>
 <div class="cell-output-display">
 <table class="table table-striped caption-top table-sm small" data-quarto-postprocess="true">
-<caption>Regression Coefficients for Labor Generalized Linear Model</caption>
+<caption>Regression Coefficients for Labor Gamma Regression Model</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">Variable</th>
@@ -1065,21 +1065,21 @@ window.Quarto = {
 </div>
 </div>
 <p>Progress! It looks like our p-value for ‘avg_pesticide’ is roughly half of what our last model produced. This is a meaningless improvement however, as the new value is still statistically insignificant at <span class="math inline">\(\alpha\)</span> &lt; 0.05 with a value of 0.34. Let’s check to see if this new method produced data that is normal and homoscedastic, using the same methods from before.</p>
-<section id="logistic-model-evaluation" class="level3">
-<h3 class="anchored" data-anchor-id="logistic-model-evaluation">Logistic Model Evaluation</h3>
+<section id="gamma-model-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="gamma-model-evaluation">Gamma Model Evaluation</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions and residuals for avg_total_labor using the glm model</span></span>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate predictions and residuals for avg_total_labor using the gamma model</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>combined_glm <span class="ot">&lt;-</span> combined_tidy <span class="sc">%&gt;%</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">predicted_labor =</span> <span class="fu">predict</span>(labor_glm, <span class="at">type =</span> <span class="st">"response"</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">residuals_glm =</span> <span class="fu">residuals.glm</span>(labor_glm))</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a histogram of glm residuals to check normality</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a histogram of gamma residuals to check normality</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>glm_hist_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_glm, <span class="fu">aes</span>(<span class="at">x =</span> residuals_glm)) <span class="sc">+</span></span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"lavender"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of GLM Residuals"</span>, <span class="at">x =</span> <span class="st">"Residuals"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Gamma Regression Residuals"</span>, <span class="at">x =</span> <span class="st">"Residuals"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
 <span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
 <span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))  <span class="co"># Center the title</span></span>
 <span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
@@ -1088,7 +1088,7 @@ window.Quarto = {
 <span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>glm_qq_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_glm, <span class="fu">aes</span>(<span class="at">sample =</span> predicted_labor)) <span class="sc">+</span></span>
 <span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">color =</span> <span class="st">"firebrick"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q Plot of GLM Residuals"</span>) <span class="sc">+</span></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Q-Q Plot of Gamma Regression Residuals"</span>) <span class="sc">+</span></span>
 <span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
 <span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))  <span class="co"># Center the title</span></span>
 <span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a></span>
@@ -1097,7 +1097,7 @@ window.Quarto = {
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>glm_fitted_resdid_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_glm, <span class="fu">aes</span>(<span class="at">x =</span> predicted_labor, <span class="at">y =</span> residuals_glm)) <span class="sc">+</span></span>
 <span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
 <span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"tomato"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Fitted Values"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>, <span class="at">title =</span> <span class="st">"GLM Residuals vs Fitted Values"</span>) <span class="sc">+</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Fitted Values"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>, <span class="at">title =</span> <span class="st">"Gamma Regression Residuals vs Fitted Values"</span>) <span class="sc">+</span></span>
 <span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))  <span class="co"># Center the title</span></span>
 <span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a></span>
@@ -1134,11 +1134,11 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>After further investigation, it’s clear that this model didn’t produce normally distributed data either. Our histogram of GLM residuals is closer to a normal distribution, but it’s asymmetric with a right tail. Our Q-Q plot of GLM residuals is also a better fit, with at least half of the points landing on the line of normality. Still, the extreme high and low values deviate from the line. When we plotted the fitted GLM data versus the residual GLM data, the result is a funnel similar to the first graph. Though improved, this model did not produce normal or homoscedastic data and is therefore not worthwhile as a means to predict total labor cost from pesticide use and year alone.</p>
+<p>After further investigation, it’s clear that this model didn’t produce normally distributed data either. Our histogram of GLM residuals is closer to a normal distribution, but it’s asymmetric with a right tail. Our Q-Q plot of Gamma regression residuals is also a better fit, with at least half of the points landing on the line of normality. Still, the extreme high and low values deviate from the line. When we plotted the fitted Gamma data versus the residual Gamma data, the result is a funnel similar to the first graph. Though improved, this model did not produce normal or homoscedastic data and is therefore not worthwhile as a means to predict total labor cost from pesticide use and year alone.</p>
 </section>
 <section id="visualizing-both-linear-and-non-linear-models" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-both-linear-and-non-linear-models">Visualizing Both Linear and Non-Linear Models</h3>
-<p>Let’s compare each model by plotting our data and regression lines. Can we see a demontrable difference in outcome?</p>
+<p>Let’s compare each model by plotting our data and regression lines. Can we see a demonstrable difference in outcome?</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1146,28 +1146,39 @@ window.Quarto = {
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>total_labor_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_glm, <span class="fu">aes</span>(<span class="at">x =</span> years_elapsed, <span class="at">y =</span> avg_total_labor)) <span class="sc">+</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"slategray"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span>  <span class="co"># Scatter plot for avg_total_labor</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">color =</span> <span class="st">"firebrick"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>) <span class="sc">+</span>  <span class="co"># Regression line for total_labor_model</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Linear Model"</span>, <span class="at">title =</span> <span class="st">"Total Labor Demand After 1960"</span>, <span class="at">x =</span> <span class="st">"Years Past 1960"</span>, <span class="at">y =</span> <span class="st">"Average Total Labor"</span>) <span class="sc">+</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Linear Regression Model"</span>, <span class="at">title =</span> <span class="st">"Total Labor Demand After 1960"</span>, <span class="at">x =</span> <span class="st">"Years Past 1960"</span>, <span class="at">y =</span> <span class="st">"Average Total Labor"</span>) <span class="sc">+</span></span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
 <span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>), <span class="co"># Center the title</span></span>
 <span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))  <span class="co"># Center the subtitle</span></span>
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot for Total Labor GLM</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the plot for Total Labor Gamma</span></span>
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>total_labor_glm_plot <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(combined_glm, <span class="fu">aes</span>(<span class="at">x =</span> years_elapsed, <span class="at">y =</span> predicted_labor)) <span class="sc">+</span></span>
 <span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"forestgreen"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span>  <span class="co"># Scatter plot for avg_total_labor</span></span>
 <span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> predicted_labor),, <span class="at">color =</span> <span class="st">"slateblue"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>) <span class="sc">+</span>  <span class="co"># Regression line for total_labor_model</span></span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Generalized Linear Model"</span>, <span class="at">title =</span> <span class="st">"Predicted Total Labor Demand </span><span class="sc">\n</span><span class="st">After 1960"</span>, <span class="at">x =</span> <span class="st">"Years Past 1960"</span>, <span class="at">y =</span> <span class="st">"Predicted Average Total Labor"</span>) <span class="sc">+</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">"Gamma Regression Model"</span>, <span class="at">title =</span> <span class="st">"Predicted Total Labor Demand </span><span class="sc">\n</span><span class="st">After 1960"</span>, <span class="at">x =</span> <span class="st">"Years Past 1960"</span>, <span class="at">y =</span> <span class="st">"Predicted Average Total Labor"</span>) <span class="sc">+</span></span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()  <span class="sc">+</span></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>), <span class="co"># Center the subtitle</span></span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))  <span class="co"># Center the title</span></span>
 <span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Display both plots side by side</span></span>
-<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>total_labor_plot <span class="sc">+</span> total_labor_glm_plot <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(total_labor_plot)  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
 <p><img src="pesticides-fertilizers-labor_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(total_labor_glm_plot) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="pesticides-fertilizers-labor_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1179,13 +1190,13 @@ window.Quarto = {
 <p>Through our correlation analysis, we found that average national agricultural pesticide and fertilizer use has exploded since 1960. These two variables are closely correlated, with <span class="math inline">\(r\)</span> values of 0.82. This suggests that most growers who use fertilizers will also rely on pesticides in their approach to farming.</p>
 <p>Our linear regression analysis also found that labor demand has dropped significantly in the same time, less than half what it once was. The resulting negative correlation between labor demand and synthetic inputs is not so clear cut, however. When looking at any other predictor variable, years elapsed from 1960 had extremely strong correlation, positive or negative.</p>
 <p>Further investigation of the efficacy of our model suggest that it is a poor fit to draw any conclusions from. When plotted, the data did not have a normal distribution, the variance was not consistent, diverging at extreme values, and the coefficient p-values were not of significance.</p>
-<p>A revised logistic regression had slightly more convincing results, but still nothing concrete. We were able to get our coefficient p-value to half of what it was initially, and the data was more normally distributed, but it remained heteroscedastic and the p-value was still insgnificant despite being lower.</p>
+<p>A revised gamma regression had slightly more convincing results, but still nothing concrete. We were able to get our coefficient p-value to half of what it was initially, and the data was more normally distributed, but it remained heteroscedastic and the p-value was still insignificant despite being lower.</p>
 <p>Looking back at our Null and Alternative hypotheses, it’s impossible to be conclusive. Based on our findings, we fail to reject our null hypothesis that pesticide and fertilizer use do not have a significant effect on labor demand. Both of our predictive models yielded coefficient p-values notably higher than the convention for significance of <span class="math inline">\(alpha\)</span> &lt; 0.05.</p>
 <p>Our results suggest that there are other factors not included in our models that have a significant impact on agricultural labor demand. This is known as Omitted variable bias. Omitted variable bias occurs when a relevant predictive variable is excluded from a model, resulting in biased estimates for the included variables’ coefficients. This happens because the excluded variable is correlated with both the dependent variable and one or more of the independent variables, leading to inaccurate projections.</p>
 <p>Despite our findings that neither model is a perfect fit, we can still learn something from them. Visualized, we can see that our GLM on the right does provide a better fit for our scenario. This means that labor demand is not a fixed linear variable, it decays over time. Though not dramatic, our predictive line does curve slightly. This suggests that labor demand is influenced by factors that affect it’s trend of decay as well as the demand itself.</p>
 <section id="additional-considerations-possible-next-steps" class="level3">
 <h3 class="anchored" data-anchor-id="additional-considerations-possible-next-steps">Additional Considerations &amp; Possible Next Steps</h3>
-<p>To improve on this analysis in the future, omitted variables need to be identified and included in the logistic regression model. There are likely more than one significant predictors that are closely correlated to our ‘years_elapsed’ variable.</p>
+<p>To improve on this analysis in the future, omitted variables need to be identified and included in the gamma regression model. There are likely more than one significant predictors that are closely correlated to our ‘years_elapsed’ variable.</p>
 <figure style="float: right; margin-right: 15px; text-align: center;" class="figure">
 <img src="images/finger-weeder.gif" width="290px" style="display: block; margin-bottom: 5px;" class="figure-img">
 <figcaption style="font-size: 0.8em;">
@@ -1215,14 +1226,15 @@ window.Quarto = {
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><pre class="sourceCode code-with-copy quarto-appendix-bibtex"><code class="sourceCode bibtex">@online{carroll2024,
   author = {Carroll, Stephen},
   title = {Examing the {Impact} of {Fertilizer} \&amp; {Pesticide} {Use} on
-    {Agricultural} {Labor} {Needs}},
+    {Agricultural} {Labor} {Demands}},
   date = {2024-12-14},
   url = {https://stephenccodes.github.io/blog/fertilizer-pesticides-and-labor/},
   langid = {en}
 }
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-carroll2024" class="csl-entry quarto-appendix-citeas" role="listitem">
 Carroll, Stephen. 2024. <span>“Examing the Impact of Fertilizer &amp;
-Pesticide Use on Agricultural Labor Needs.”</span> December 14, 2024. <a href="https://stephenccodes.github.io/blog/fertilizer-pesticides-and-labor/">https://stephenccodes.github.io/blog/fertilizer-pesticides-and-labor/</a>.
+Pesticide Use on Agricultural Labor Demands.”</span> December 14, 2024.
+<a href="https://stephenccodes.github.io/blog/fertilizer-pesticides-and-labor/">https://stephenccodes.github.io/blog/fertilizer-pesticides-and-labor/</a>.
 </div></div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
