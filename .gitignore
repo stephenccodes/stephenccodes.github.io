@@ -6,6 +6,7 @@
 .quarto
 
 /.quarto/
+safe.qmd
 
 2024-10-18-my-first-post/
 blog_template/
