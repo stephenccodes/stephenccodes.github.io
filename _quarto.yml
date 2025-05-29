@@ -6,7 +6,7 @@ website:
   title: "Stephen Carroll"
   favicon: MEDS/EDS-296/stephenccodes.github.io/favicon.png 
   navbar:
-    logo: MEDS/EDS-296/stephenccodes.github.io/favicon.png 
+    logo: images/favicon.png 
     #logo-alt: "My alt text here"
     left:
       - href: index.qmd
