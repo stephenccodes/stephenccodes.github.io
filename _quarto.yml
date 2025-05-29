@@ -11,7 +11,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+    # - about.qmd # Removed 5/28 because blank
       - href: resources.qmd
         text: Resources
       - href: blog_posts.qmd

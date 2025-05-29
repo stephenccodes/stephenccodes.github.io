@@ -1,6 +1,6 @@
 ---
 title: "Stephen Carroll"
-image: Stephen_Carroll_MEDS_Headshot_2024_0021.jpeg
+image: "images/Stephen_Carroll_MEDS_Headshot_2024_0021.jpeg"
 about:
   template: trestles
   image-shape: rounded
