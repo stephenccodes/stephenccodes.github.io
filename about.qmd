@@ -1,0 +1,57 @@
+---
+title: "About page"
+#author: "Stephen Carroll"
+---
+
+Stephen holds a Masters degree in Environmental Data Science from the Bren School of Environmental Management at UC Santa Barbara. He is excited to use data science, statistics, and programming to turn messy data into clear, actionable insights that improve products, operations, and strategy. 
+
+Stephen became passionate about environmental studies as an undergraduate at UC Santa Cruz, where he interned with the UC Natural Reserve System, working to restore coastal prairie habitat. After graduating with an Anthropology degree in 2014, Stephen worked in agriculture, first, at an agri-tech startup with a mission to transform local food systems through vertical hydroponic farms, and later, at an organic farm, where he served in a leadership position and developed efficient approaches to workflow and logistics with the goal of reducing waste and costly inputs. Stephen also earned a certificate in microscopy and soil science, developing expertise in the microbiological processes that underpin the distinct agricultural operations in which he has taken part. 
+
+As a graduate student, he became an enthusiastic data scientist, problem solver, and scientific communicator while maintaining a tidy and reproducible data science practice. He especially enjoyed courses in Data Visualization, Climate Modeling, Data Management, Geospatial Analysis, Remote Sensing, and Machine Learning. In his capstone project, he helped build a data-processing pipeline that utilized machine learning and remote sensing data to estimate the emissions produced by all global fisheries, the first database of it's kind. The results were integrated into the [Seamissions Explorer](https://emlab-ucsb.shinyapps.io/seamissions-explorer/), an interactive web-based dashboard to support researchers and consumers in analyzing fisheries’ emissions across regions and time.
+
+## Experience
+
+### Director of Operations – Dirty Girl Produce, Santa Cruz, CA (September 2022 - August 2024) 
+
+•	Analyzed sales and crop data (G-suite, LLMs) to optimize planting and distribution decisions
+
+•	Embedded predictive analysis into revenue forecast, adjusting the crop plan and sales strategy to center on wholesale clients, driving a 3x  revenue growth to $1.5 Million
+
+•	Modernized financial operations with Quickbooks and Square POS
+
+•	Strengthened brand integrity through client engagement and support 
+
+### Technician – Plenty Unlimited Inc., South San Francisco, CA (June 2020 - June 2021)
+
+•	Authored and implemented sanitation SOPs and multi-media training guides adopted at facility
+
+•	Monitored food safety compliance by conducting swab tests and analyzing data
+
+•	Ensured compliance with industry leading food safety standards
+
+### Assistant Warehouse Manager – The Gardener, Berkeley, CA (May 2016 – December 2019)
+
+•	Directed daily warehouse operations in a high-volume retail environment, coordinating logistics for three storefronts to ensure consistent product availability
+
+•	Supervised and trained a team of four employees, improving efficiency and reducing errors in order fulfillment
+
+•	Maintained accurate inventory database, reconciling invoices and reducing overpayment by 6%
+
+### Velcorin Technician – VinPure, Napa, CA (May 2015 – May 2016) 
+
+•	Operated and calibrated Velcorin stabilization equipment to ensure microbial safety in wine production
+
+•	Calculated precise chemical dosages, ensuring compliance with safety standards and align treatment processes with product quality goals
+
+•	Documented procedures and service reports  
+
+### Winemaking Intern – Jeff Cohn Cellars, Richmond, CA (August – December 2015)
+
+•	Supported full winemaking process from fermentation to bottling
+
+•	Collected and analyzed samples to monitor fermentation progress and ensure product quality
+
+•	Prepared and operated machinery, ensuring successful fermentation and contributing to small-lot, high-end wine  
+
+
+

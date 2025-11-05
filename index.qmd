@@ -19,18 +19,29 @@ about:
       target: _blank
 ---
 
+Howdy, I'm Stephen!
 
-Stephen Carroll holds a Master in Environmental Data Science degree from the Bren School of Environmental Management at UC Santa Barbara.
-Stephen became passionate about environmental studies as an undergraduate at UC Santa Cruz, where he interned with the UC Natural Reserve System, working to restore coastal prairie habitat. After graduating with an Anthropology degree in 2014, Stephen worked in agriculture, first, at an agri-tech startup with a mission to transform local food systems through vertical hydroponic farms, and later, at an organic farm, where he served in a leadership position and developed efficient approaches to workflow and logistics with the goal of reducing waste and costly inputs. Stephen also earned a certificate in microscopy and soil science, developing expertise in the microbiological processes that underpin the distinct agricultural operations in which he has taken part. He is excited to use his skills in data analysis, statistics, and programming to deepen his knowledge of conservation, waste management, and agroecology. After graduate school, he intends to use data science to find practical solutions to universal problems.
+I am a recent [MEDS](https://bren.ucsb.edu/masters-programs/master-environmental-data-science) graduate in search of problems to solve.
+
+I'm interested in all things data science, agroecology, and conservation. When I'm not crunching numbers, you can find me in the garden composting, the kitchen simmering, or the cellar fermenting.
+
 
 ## Education
 
-some text here
+**Master of Environmental Data Science (MEDS)**, Bren School of Environmental Science & Management, University of California, Santa Barbara (2025)
 
-## Experience
+**Certificate, Microscopy & Soil Science** - Soil Food Web School (2022)
 
-some text here
+**B.A. Anthropology** - University of California, Santa Cruz (2014)
 
 ## Skills
 
-some text here
+**Machine Learning & Data Analysis:**
+Python(NumPy, Pandas, Matplotlib, Seaborn, Time Series, Machine Learning, Decision Trees, Parameter Tuning), R(tidyverse), SQL(SQLite, PostgreSQL), Git/GitHub, ArcGIS
+
+**Data Visualization:**
+Python(Matplotlib, Seaborn), R(ggplot2, tmap, shiny
+
+**Computer:**
+Microsoft & Google suites, QuickBooks, Canva, Mailchimp, Power BI, Tableau
+

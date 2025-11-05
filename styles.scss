@@ -12,6 +12,7 @@ $Cambridge-Blue: #87BBA2;
 $Blue-Munsell: #55828B;
 $Dark-Slate-Gray: #3B6064;
 $Charcoal: #364958;
+$Dark-Teal: #162529;
 $Mint-White: #F2F7F2;
 
 // Quarto Sass Variables
@@ -34,7 +35,7 @@ h1, h2 {
 }
 
 .title{
-  color: maroon;
+  color: $Dark-Teal;
 }
 
 .center-text {

@@ -77,32 +77,18 @@
     "text": "Data visualization:\nNow we can plot the AQ! and 5-day average over time to see how the 2017 Thomas Fire impacted it.\n\n# Initialize a figure and axis \nfig, ax = plt.subplots(figsize = (12, 8)) # Set dimensions relatively wide to space out lines\n\n# Visualize air quality during the Thomas Fire\naqi_sb.aqi.plot(ax=ax, label = 'AQI')\naqi_sb.five_day_average.plot(ax=ax, label = \"Five day AQI average\")\n\n# Show the date for the Thomas fire\nplt.axvline(x = '2017-12-04', \n            color = 'red', \n            linestyle = 'dashed', \n            label = \"Thomas Fire\")\n\n# Labels\n# Title describing the area and event of interest\nax.set_title('2017 Thomas Fire in Santa Barbara & Ventura County', \n             color = 'black', \n             fontsize = 12, \n             fontweight='normal', \n             y=0.99)\n\n# Subtitle describing the plot\nfig.suptitle('Daily AQI and 5-day AQI averages:', \n             color = 'black', \n             fontsize = 12, \n             fontweight='heavy', \n             y=0.93)\n\nax.set_xlabel('Date')\nax.set_ylabel('AQI')\nax.legend()\n\n# Display the figure\nplt.show()\n\n\n\n\n\n\n\n\n\nReference List:\n\nU.S. Geological Survey. (n.d.). Landsat 8-9 OLI/TIRS collection 2 level-2 science products | USGS EROS Archive. U.S. Geological Survey. https://www.usgs.gov/centers/eros/science/usgs-eros-archive-landsat-archives-landsat-8-9-olitirs-collection-2-level-2 Access date: November 19, 2024.\nData.gov. (2024). California fire perimeters (ALL). Data.gov. https://catalog.data.gov/dataset/california-fire-perimeters-all-b3436 Access date: November 19, 2024.\nAirnow.gov. (2017-2018). US Environmental Protection Agency. Air Quality Index (AQI) data from the US Environmental Protection Agency Access date: October 26, 2024.\n\n\n\nAcknowledgements\nAll materials were created by Carmen Galaz-Garcia for EDS-220: Working with Environmental Data."
   },
   {
-    "objectID": "blog_posts/blog_template/index.html",
-    "href": "blog_posts/blog_template/index.html",
-    "title": "Blog post 1",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About page",
     "section": "",
-    "text": "I’m going to insert a footnote here1"
+    "text": "Stephen holds a Masters degree in Environmental Data Science from the Bren School of Environmental Management at UC Santa Barbara. He is excited to use data science, statistics, and programming to turn messy data into clear, actionable insights that improve products, operations, and strategy.\nStephen became passionate about environmental studies as an undergraduate at UC Santa Cruz, where he interned with the UC Natural Reserve System, working to restore coastal prairie habitat. After graduating with an Anthropology degree in 2014, Stephen worked in agriculture, first, at an agri-tech startup with a mission to transform local food systems through vertical hydroponic farms, and later, at an organic farm, where he served in a leadership position and developed efficient approaches to workflow and logistics with the goal of reducing waste and costly inputs. Stephen also earned a certificate in microscopy and soil science, developing expertise in the microbiological processes that underpin the distinct agricultural operations in which he has taken part.\nAs a graduate student, he became an enthusiastic data scientist, problem solver, and scientific communicator while maintaining a tidy and reproducible data science practice. He especially enjoyed courses in Data Visualization, Climate Modeling, Data Management, Geospatial Analysis, Remote Sensing, and Machine Learning. In his capstone project, he helped build a data-processing pipeline that utilized machine learning and remote sensing data to estimate the emissions produced by all global fisheries, the first database of it’s kind. The results were integrated into the Seamissions Explorer an interactive web-based dashboard to support researchers and consumers in analyzing fisheries’ emissions across regions and time."
   },
   {
-    "objectID": "blog_posts/blog_template/index.html#this-is-my-first-section",
-    "href": "blog_posts/blog_template/index.html#this-is-my-first-section",
-    "title": "Blog post 1",
-    "section": "",
-    "text": "I’m going to insert a footnote here1"
-  },
-  {
-    "objectID": "blog_posts/blog_template/index.html#this-is-my-second",
-    "href": "blog_posts/blog_template/index.html#this-is-my-second",
-    "title": "Blog post 1",
-    "section": "This is my second",
-    "text": "This is my second\nHere’s my next paragraph2\nI’m citing me(Csik 2022)\nHere is more random text. I’m going to cite a journal article now.(Gaynor et al. 2022)"
-  },
-  {
-    "objectID": "blog_posts/blog_template/index.html#footnotes",
-    "href": "blog_posts/blog_template/index.html#footnotes",
-    "title": "Blog post 1",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nHere is a new footnote↩︎\nHere is my second footnote↩︎"
+    "objectID": "about.html#experience",
+    "href": "about.html#experience",
+    "title": "About page",
+    "section": "Experience",
+    "text": "Experience"
   },
   {
     "objectID": "blog_posts/stats-project/pesticides-fertilizers-labor.html",
@@ -175,60 +161,25 @@
     "text": "Results\nThrough our correlation analysis, we found that average national agricultural pesticide and fertilizer use has exploded since 1960. These two variables are closely correlated, with \\(r\\) values of 0.82. This suggests that most growers who use fertilizers will also rely on pesticides in their approach to farming.\nOur linear regression analysis also found that labor demand has dropped significantly in the same time, less than half what it once was. The resulting negative correlation between labor demand and synthetic inputs is not so clear cut, however. When looking at any other predictor variable, years elapsed from 1960 had extremely strong correlation, positive or negative.\nFurther investigation of the efficacy of our model suggest that it is a poor fit to draw any conclusions from. When plotted, the data did not have a normal distribution, the variance was not consistent, diverging at extreme values, and the coefficient p-values were not of significance.\nA revised gamma regression had slightly more convincing results, but still nothing concrete. We were able to get our coefficient p-value to half of what it was initially, and the data was more normally distributed, but it remained heteroscedastic and the p-value was still insignificant despite being lower.\nLooking back at our Null and Alternative hypotheses, it’s impossible to be conclusive. Based on our findings, we fail to reject our null hypothesis that pesticide and fertilizer use do not have a significant effect on labor demand. Both of our predictive models yielded coefficient p-values notably higher than the convention for significance of \\(alpha\\) &lt; 0.05.\nOur results suggest that there are other factors not included in our models that have a significant impact on agricultural labor demand. This is known as Omitted variable bias. Omitted variable bias occurs when a relevant predictive variable is excluded from a model, resulting in biased estimates for the included variables’ coefficients. This happens because the excluded variable is correlated with both the dependent variable and one or more of the independent variables, leading to inaccurate projections.\nDespite our findings that neither model is a perfect fit, we can still learn something from them. Visualized, we can see that our GLM on the right does provide a better fit for our scenario. This means that labor demand is not a fixed linear variable, it decays over time. Though not dramatic, our predictive line does curve slightly. This suggests that labor demand is influenced by factors that affect it’s trend of decay as well as the demand itself.\n\nAdditional Considerations & Possible Next Steps\nTo improve on this analysis in the future, omitted variables need to be identified and included in the gamma regression model. There are likely more than one significant predictors that are closely correlated to our ‘years_elapsed’ variable.\n\n\n\nextension.umn.edu\n\n\nThese might include the introduction of cost-saving technologies, higher yielding and pest or disease resistant crops, higher domestic wages, cost of living changes, inflation, an increase in availability of cheaper migrant labor, broader economic trends, or other unidentified predictors. It is possible that one or more of these factors has relevance to the model, and including them w would further mitigate omitted variable bias and improve the interpretability and accuracy of the model.\nFurthermore, more localized, targeted data might be helpful in understanding trends. Comparing data from different regions or states and including relevant economic factors could aid in evaluating the connection between synthetic inputs and labor if there is one. A comparison between conventional and organic farms would also be valuable, though the relatively small number and size of the latter would be an obstacle to overcome.\n\n\nReferences\n1: U.S. Department of Agriculture, Economic Research Service. (2024). Agricultural productivity in the United States. https://www.ers.usda.gov/data-products/agricultural-productivity-in-the-united-states/. Accessed: November 11, 2024.\n2: U.S. Department of Agriculture, Economic Research Service. (2024). Fertilizer & Pesticide Use in the United States https://www.ers.usda.gov/webdocs/DataFiles/47679/table17.xls?v=0. Accessed: November 11, 2024.\n\n\nData Availability\nThe report Fertilizer & Pesticide Use in the United States is no longer available online at the source above. The data can be found in the repository for this post.\n\n\nAcknowledgements\nThis post is based on a project from Max Czapanskiy for EDS-222: Statistics for Environmental Data Scientists."
   },
   {
-    "objectID": "blog_posts/wine-vine-analysis/index.html",
-    "href": "blog_posts/wine-vine-analysis/index.html",
-    "title": "Wine & Vines",
-    "section": "",
-    "text": "I’m going to insert a footnote here1"
-  },
-  {
-    "objectID": "blog_posts/wine-vine-analysis/index.html#this-is-my-first-section",
-    "href": "blog_posts/wine-vine-analysis/index.html#this-is-my-first-section",
-    "title": "Wine & Vines",
-    "section": "",
-    "text": "I’m going to insert a footnote here1"
-  },
-  {
-    "objectID": "blog_posts/wine-vine-analysis/index.html#this-is-my-second",
-    "href": "blog_posts/wine-vine-analysis/index.html#this-is-my-second",
-    "title": "Wine & Vines",
-    "section": "This is my second",
-    "text": "This is my second\nHere’s my next paragraph2\nI’m citing me(Csik 2022)\nHere is more random text. I’m going to cite a journal article now.(Gaynor et al. 2022)"
-  },
-  {
-    "objectID": "blog_posts/wine-vine-analysis/index.html#footnotes",
-    "href": "blog_posts/wine-vine-analysis/index.html#footnotes",
-    "title": "Wine & Vines",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nHere is a new footnote↩︎\nHere is my second footnote↩︎"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Stephen Carroll",
     "section": "",
-    "text": "Stephen Carroll holds a Master in Environmental Data Science degree from the Bren School of Environmental Management at UC Santa Barbara. Stephen became passionate about environmental studies as an undergraduate at UC Santa Cruz, where he interned with the UC Natural Reserve System, working to restore coastal prairie habitat. After graduating with an Anthropology degree in 2014, Stephen worked in agriculture, first, at an agri-tech startup with a mission to transform local food systems through vertical hydroponic farms, and later, at an organic farm, where he served in a leadership position and developed efficient approaches to workflow and logistics with the goal of reducing waste and costly inputs. Stephen also earned a certificate in microscopy and soil science, developing expertise in the microbiological processes that underpin the distinct agricultural operations in which he has taken part. He is excited to use his skills in data analysis, statistics, and programming to deepen his knowledge of conservation, waste management, and agroecology. After graduate school, he intends to use data science to find practical solutions to universal problems."
+    "text": "Howdy, I’m Stephen!\nI am a recent MEDS graduate in search of problems to solve.\nI’m interested in all things data science, agroecology, and conservation. When I’m not crunching numbers, you can find me in the garden composting, the kitchen simmering, or the cellar fermenting."
   },
   {
     "objectID": "index.html#education",
     "href": "index.html#education",
     "title": "Stephen Carroll",
     "section": "Education",
-    "text": "Education\nsome text here"
-  },
-  {
-    "objectID": "index.html#experience",
-    "href": "index.html#experience",
-    "title": "Stephen Carroll",
-    "section": "Experience",
-    "text": "Experience\nsome text here"
+    "text": "Education\nMaster of Environmental Data Science (MEDS), Bren School of Environmental Science & Management, University of California, Santa Barbara (2025)\nCertificate, Microscopy & Soil Science - Soil Food Web School (2022)\nB.A. Anthropology - University of California, Santa Cruz (2014)"
   },
   {
     "objectID": "index.html#skills",
     "href": "index.html#skills",
     "title": "Stephen Carroll",
     "section": "Skills",
-    "text": "Skills\nsome text here"
+    "text": "Skills\nMachine Learning & Data Analysis: Python(NumPy, Pandas, Matplotlib, Seaborn, Time Series, Machine Learning, Decision Trees, Parameter Tuning), R(tidyverse), SQL(SQLite, PostgreSQL), Git/GitHub, ArcGIS\nData Visualization: Python(Matplotlib, Seaborn), R(ggplot2, tmap, shiny\nComputer: Microsoft & Google suites, QuickBooks, Canva, Mailchimp, Power BI, Tableau"
   },
   {
     "objectID": "safe.html",
